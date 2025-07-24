@@ -14,7 +14,7 @@ A modern, responsive, and interactive resume website built with HTML, CSS, and J
 
 ## 🚀 Live
 
-Visit the live resume at: [https://dineshvarmaguduru.github.io/dinesh-live/](https://dineshvarmaguduru.github.io/dinesh-live/)
+Visit the live resume at: [https://dineshguduru.github.io/dinesh-live/](https://dineshguduru.github.io/dinesh-live/)
 
 ## 📁 Project Structure
 

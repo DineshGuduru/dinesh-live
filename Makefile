@@ -63,7 +63,7 @@ deploy:
 	@echo "📤 Pushing to GitHub..."
 	@git push origin main
 	@echo "✅ Deployed! Changes will be live at GitHub Pages in a few minutes"
-	@echo "🌐 Live URL: https://dineshvarmaguduru.github.io/dinesh-live/"
+	@echo "🌐 Live URL: https://dineshguduru.github.io/dinesh-live/"
 
 ## Status - Check container status
 status:
