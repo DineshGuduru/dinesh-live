@@ -11,6 +11,10 @@ IMAGE_NAME := dinesh-live
 CONTAINER_NAME := dinesh-personal-website
 PORT := 8080
 
+# Auto-detect docker compose command (newer Docker uses 'docker compose', older uses 'docker-compose')
+DOCKER_COMPOSE := $(shell if command -v docker-compose >/dev/null 2>&1; then echo "docker-compose"; else echo "docker compose"; fi)
+DOCKER_COMPOSE_FILE := docker/docker-compose.yml
+
 ## Help - Show available commands
 help:
 	@echo "🚀 Dinesh's Personal Website - Make Commands"
