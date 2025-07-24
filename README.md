@@ -41,8 +41,9 @@ dinesh-live/
 ### 🏗️ Clean Architecture
 - **Source Code**: All application files organized in `app/` directory
 - **Docker Setup**: Containerization files isolated in `docker/` directory  
-- **Zero Redundancy**: No duplicate files, deployment artifacts automatically excluded
-- **Smart Deployment**: `make deploy` temporarily copies files to root for GitHub Pages
+- **Zero Redundancy**: No duplicate files, clean separation of concerns
+- **Docker Deployment**: GitHub Actions uses Docker to build and deploy to GitHub Pages
+- **Local Testing**: `make test-deploy` runs the same Docker setup locally
 
 ## 🛠️ Technologies Used
 
@@ -139,14 +140,37 @@ make help
 - `make run` - Start the website server (Docker)
 - `make build` - Build the Docker image  
 - `make stop` - Stop the running container
-- `make deploy` - Deploy to GitHub Pages (commit & push)
+- `make deploy` - Deploy to GitHub Pages via Docker (commit & push)
+- `make test-deploy` - Test Docker deployment locally
 - `make status` - Check container status
 - `make logs` - View container logs
-- `make clean` - Clean up Docker resources and deployment artifacts
-- `make clean-deploy` - Clean deployment artifacts only
+- `make clean` - Clean up Docker resources
 - `make dev` - Start local development server (Python)
 
 After running `make run`, visit: **http://localhost:8080**
+
+## 🚀 Docker-Powered Deployment
+
+This project uses **GitHub Actions with Docker** for seamless deployment to GitHub Pages:
+
+### How It Works
+1. **Push to main** → Triggers GitHub Actions workflow
+2. **Docker Build** → Creates optimized container with your app
+3. **Extract & Deploy** → Copies built files to GitHub Pages
+4. **Live Site** → Automatically updates at your GitHub Pages URL
+
+### Local Testing
+```bash
+# Test the exact same Docker deployment locally
+make test-deploy
+
+# Visit http://localhost:8080 to see the result
+# Stop with: docker stop dinesh-live-test && docker rm dinesh-live-test
+```
+
+### Deployment Status
+- **Workflow**: Check deployment progress at `https://github.com/DineshGuduru/dinesh-live/actions`
+- **Live Site**: [https://dineshguduru.github.io/dinesh-live/](https://dineshguduru.github.io/dinesh-live/)
 
 ## 🐳 Docker Development
 

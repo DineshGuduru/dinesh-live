@@ -1,8 +1,5 @@
-# Deployment artifacts (copied from app/ during GitHub Pages deploy)
-/index.html
-/style.css
-/script.js
-/images/
+# GitHub Pages now uses Docker deployment via GitHub Actions
+# No need to ignore deployment artifacts
 
 # OS generated files
 .DS_Store
