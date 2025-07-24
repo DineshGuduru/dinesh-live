@@ -137,15 +137,14 @@ make help
 ```
 
 ### Available Make Commands
-- `make run` - Start the website server (Docker)
+- `make dev` - Start development server (Python, fast)
+- `make run` - Start website server (Docker, full setup)
 - `make build` - Build the Docker image  
+- `make deploy` - Deploy to GitHub Pages via Docker
 - `make stop` - Stop the running container
-- `make deploy` - Deploy to GitHub Pages via Docker (commit & push)
-- `make test-deploy` - Test Docker deployment locally
 - `make status` - Check container status
 - `make logs` - View container logs
 - `make clean` - Clean up Docker resources
-- `make dev` - Start local development server (Python)
 
 After running `make run`, visit: **http://localhost:8080**
 
@@ -161,11 +160,11 @@ This project uses **GitHub Actions with Docker** for seamless deployment to GitH
 
 ### Local Testing
 ```bash
-# Test the exact same Docker deployment locally
-make test-deploy
+# Quick development (Python server)
+make dev        # Fast, lightweight at http://localhost:8000
 
-# Visit http://localhost:8080 to see the result
-# Stop with: docker stop dinesh-live-test && docker rm dinesh-live-test
+# Full Docker testing (same as production)
+make run        # Complete setup at http://localhost:8080
 ```
 
 ### Deployment Status

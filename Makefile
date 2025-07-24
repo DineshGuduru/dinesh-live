@@ -1,7 +1,7 @@
 # Makefile for Dinesh's Personal Website
 # Usage: make <command>
 
-.PHONY: help run build stop deploy clean status logs test-deploy dev restart rebuild clean-test
+.PHONY: help run build stop deploy clean status logs dev restart rebuild
 
 # Default target
 .DEFAULT_GOAL := help
@@ -20,18 +20,16 @@ help:
 	@echo "🚀 Dinesh's Personal Website - Make Commands"
 	@echo ""
 	@echo "Available commands:"
-	@echo "  make run         - Start the website server (Docker)"
-	@echo "  make dev         - Start local development server (Python)"
+	@echo "  make dev         - Start development server (Python, fast)"
+	@echo "  make run         - Start website server (Docker, full setup)"
 	@echo "  make build       - Build the Docker image"
-	@echo "  make test-deploy - Test Docker deployment locally"
 	@echo "  make deploy      - Deploy to GitHub Pages via Docker"
 	@echo "  make stop        - Stop the running container"
 	@echo "  make status      - Check container status"
 	@echo "  make logs        - View container logs"
 	@echo "  make clean       - Clean up Docker resources"
-	@echo "  make clean-test  - Clean up test deployment"
 	@echo ""
-	@echo "🌐 After running 'make run', visit: http://localhost:$(PORT)"
+	@echo "🌐 Development: http://localhost:8000 (dev) or http://localhost:$(PORT) (run)"
 
 ## Run - Start the website server using Docker Compose
 run:
@@ -80,19 +78,7 @@ clean:
 	@docker system prune -f
 	@echo "✅ Cleanup completed!"
 
-## Test Deploy - Test the Docker-based deployment locally
-test-deploy: build
-	@echo "🚀 Starting test deployment..."
-	@docker run -d -p $(PORT):80 --name $(CONTAINER_NAME)-test $(IMAGE_NAME):latest
-	@echo "✅ Test deployment running at http://localhost:$(PORT)"
-	@echo "🛑 Stop with: make clean-test"
 
-## Clean Test - Clean up test deployment
-clean-test:
-	@echo "🧹 Stopping test deployment..."
-	@docker stop $(CONTAINER_NAME)-test 2>/dev/null || true
-	@docker rm $(CONTAINER_NAME)-test 2>/dev/null || true
-	@echo "✅ Test deployment cleaned up!"
 
 ## Dev - Start local development server (Python)
 dev:
