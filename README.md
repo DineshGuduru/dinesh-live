@@ -134,7 +134,8 @@ make help
 - `make deploy` - Deploy to GitHub Pages (commit & push)
 - `make status` - Check container status
 - `make logs` - View container logs
-- `make clean` - Clean up Docker resources
+- `make clean` - Clean up Docker resources and deployment artifacts
+- `make clean-deploy` - Clean deployment artifacts only
 - `make dev` - Start local development server (Python)
 
 After running `make run`, visit: **http://localhost:8080**

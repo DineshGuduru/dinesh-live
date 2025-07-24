@@ -16,15 +16,16 @@ help:
 	@echo "🚀 Dinesh's Personal Website - Make Commands"
 	@echo ""
 	@echo "Available commands:"
-	@echo "  make run     - Start the website server (Docker)"
-	@echo "  make build   - Build the Docker image"
-	@echo "  make stop    - Stop the running container"
-	@echo "  make deploy  - Deploy to GitHub Pages (commit & push)"
-	@echo "  make status  - Check container status"
-	@echo "  make logs    - View container logs"
-	@echo "  make clean   - Clean up Docker resources"
-	@echo "  make dev     - Start local development server (Python)"
-	@echo "  make help    - Show this help message"
+	@echo "  make run         - Start the website server (Docker)"
+	@echo "  make build       - Build the Docker image"
+	@echo "  make stop        - Stop the running container"
+	@echo "  make deploy      - Deploy to GitHub Pages (commit & push)"
+	@echo "  make status      - Check container status"
+	@echo "  make logs        - View container logs"
+	@echo "  make clean       - Clean up Docker resources and deployment artifacts"
+	@echo "  make clean-deploy - Clean deployment artifacts only"
+	@echo "  make dev         - Start local development server (Python)"
+	@echo "  make help        - Show this help message"
 	@echo ""
 	@echo "🌐 After running 'make run', visit: http://localhost:$(PORT)"
 
@@ -80,12 +81,20 @@ logs:
 	@echo "📋 Container Logs:"
 	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) logs -f
 
-## Clean - Clean up Docker resources
+## Clean - Clean up Docker resources and deployment artifacts
 clean:
 	@echo "🧹 Cleaning up Docker resources..."
 	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) down --rmi all --volumes --remove-orphans 2>/dev/null || true
 	@docker system prune -f
+	@echo "🧹 Cleaning up deployment artifacts..."
+	@rm -rf index.html style.css script.js images/ 2>/dev/null || true
 	@echo "✅ Cleanup completed!"
+
+## Clean Deploy - Clean deployment artifacts only
+clean-deploy:
+	@echo "🧹 Cleaning deployment artifacts..."
+	@rm -rf index.html style.css script.js images/ 2>/dev/null || true
+	@echo "✅ Deployment artifacts cleaned!"
 
 ## Dev - Start local development server (Python)
 dev:
