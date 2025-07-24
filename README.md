@@ -20,21 +20,29 @@ Visit the live resume at: [https://dineshguduru.github.io/dinesh-live/](https://
 
 ```
 dinesh-live/
-├── app/                # Application files
-│   ├── index.html      # Main HTML structure
-│   ├── style.css       # CSS styles and animations
-│   ├── script.js       # JavaScript functionality
-│   └── images/         # Static images and assets
-├── docker/             # Docker configuration
-│   ├── Dockerfile      # Docker container configuration
-│   ├── docker-compose.yml # Docker orchestration
-│   ├── docker-build.sh # Docker build script
-│   ├── nginx.conf      # Nginx web server configuration
-│   └── .dockerignore   # Docker ignore patterns
-├── Makefile           # Build and deployment automation
-├── README.md          # Project documentation
-└── LICENSE            # License file
+├── .gitignore          # Git ignore rules (excludes deployment artifacts)
+├── .nojekyll          # GitHub Pages configuration
+├── app/               # 📱 APPLICATION SOURCE CODE
+│   ├── index.html     # Main HTML structure
+│   ├── style.css      # CSS styles and animations
+│   ├── script.js      # JavaScript functionality
+│   └── images/        # Static images and assets
+├── docker/            # 🐳 DOCKER CONFIGURATION
+│   ├── Dockerfile     # Container configuration
+│   ├── docker-compose.yml # Orchestration setup
+│   ├── docker-build.sh # Build automation script
+│   ├── nginx.conf     # Web server configuration
+│   └── .dockerignore  # Docker ignore patterns
+├── LICENSE            # 📄 MIT License
+├── Makefile          # 🔧 Build and deployment automation
+└── README.md         # 📚 Project documentation
 ```
+
+### 🏗️ Clean Architecture
+- **Source Code**: All application files organized in `app/` directory
+- **Docker Setup**: Containerization files isolated in `docker/` directory  
+- **Zero Redundancy**: No duplicate files, deployment artifacts automatically excluded
+- **Smart Deployment**: `make deploy` temporarily copies files to root for GitHub Pages
 
 ## 🛠️ Technologies Used
 
@@ -204,10 +212,10 @@ After running any of the above methods, visit: **http://localhost:8080**
 ## 🎯 Customization
 
 ### Updating Content
-1. **Personal Information**: Edit the contact details in `index.html`
+1. **Personal Information**: Edit the contact details in `app/index.html`
 2. **Experience**: Update the experience items in the HTML structure
 3. **Skills**: Modify the skills grid to reflect your technologies
-4. **Styling**: Customize colors and fonts in `style.css`
+4. **Styling**: Customize colors and fonts in `app/style.css`
 
 ### Color Scheme
 The site uses a purple gradient theme. To change colors, update these CSS variables:
@@ -220,10 +228,10 @@ background: linear-gradient(135deg, #your-color-1 0%, #your-color-2 100%);
 ```
 
 ### Adding New Sections
-1. Add new section HTML in `index.html`
+1. Add new section HTML in `app/index.html`
 2. Add corresponding navigation link
-3. Update the JavaScript sections array
-4. Add custom styling if needed
+3. Update the JavaScript sections array in `app/script.js`
+4. Add custom styling in `app/style.css` if needed
 
 ## 📱 Browser Support
 
