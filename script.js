@@ -1,71 +1,73 @@
 // Interactive Resume JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize the resume
-    initNavigation();
+    // Initialize the website
+    initMainNavigation();
     initAnimations();
     initSkillInteractions();
-    initPrintFunction();
 });
 
-// Navigation functionality
-function initNavigation() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('.section');
+// Main Navigation functionality (Resume, Books, Gear)
+function initMainNavigation() {
+    const mainNavLinks = document.querySelectorAll('.main-nav-link');
+    const mainSections = document.querySelectorAll('.main-section');
 
-    navLinks.forEach(link => {
+    mainNavLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Remove active class from all links and sections
-            navLinks.forEach(l => l.classList.remove('active'));
-            sections.forEach(s => s.classList.remove('active'));
+            // Remove active class from all main nav links and sections
+            mainNavLinks.forEach(l => l.classList.remove('active'));
+            mainSections.forEach(s => s.classList.remove('active'));
             
             // Add active class to clicked link
             this.classList.add('active');
             
-            // Show corresponding section
-            const targetId = this.getAttribute('href').substring(1);
+            // Show corresponding main section
+            const targetId = this.getAttribute('data-target');
             const targetSection = document.getElementById(targetId);
             
             if (targetSection) {
                 targetSection.classList.add('active');
                 
-                // Smooth scroll to section
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                // Update URL hash
+                window.location.hash = targetId;
+                
+                // Smooth scroll to top
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
             }
         });
     });
 
-    // Handle hash changes (for direct navigation)
+    // Handle hash changes for main navigation
     window.addEventListener('hashchange', function() {
         const hash = window.location.hash.substring(1);
-        if (hash) {
-            showSection(hash);
+        if (hash && ['resume', 'books', 'gear'].includes(hash)) {
+            showMainSection(hash);
         }
     });
 
     // Check for initial hash
     const initialHash = window.location.hash.substring(1);
-    if (initialHash) {
-        showSection(initialHash);
+    if (initialHash && ['resume', 'books', 'gear'].includes(initialHash)) {
+        showMainSection(initialHash);
     }
 }
 
-function showSection(sectionId) {
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('.section');
+function showMainSection(sectionId) {
+    const mainNavLinks = document.querySelectorAll('.main-nav-link');
+    const mainSections = document.querySelectorAll('.main-section');
     
     // Remove active class from all
-    navLinks.forEach(l => l.classList.remove('active'));
-    sections.forEach(s => s.classList.remove('active'));
+    mainNavLinks.forEach(l => l.classList.remove('active'));
+    mainSections.forEach(s => s.classList.remove('active'));
     
     // Activate target section and nav link
     const targetSection = document.getElementById(sectionId);
-    const targetNavLink = document.querySelector(`[href="#${sectionId}"]`);
+    const targetNavLink = document.querySelector(`[data-target="${sectionId}"]`);
     
     if (targetSection) {
         targetSection.classList.add('active');
@@ -75,6 +77,8 @@ function showSection(sectionId) {
         targetNavLink.classList.add('active');
     }
 }
+
+
 
 // Animation functionality
 function initAnimations() {
@@ -161,86 +165,113 @@ function initSkillInteractions() {
     document.head.appendChild(style);
 }
 
-// Print functionality
-function initPrintFunction() {
-    // Add print button
-    const header = document.querySelector('.header');
-    const printButton = document.createElement('button');
-    printButton.innerHTML = '<i class="fas fa-print"></i> Print Resume';
-    printButton.className = 'print-button';
-    printButton.style.cssText = `
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 25px;
-        cursor: pointer;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-    `;
-    
-    printButton.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-2px)';
-        this.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.4)';
-    });
-    
-    printButton.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
-        this.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.3)';
-    });
-    
-    printButton.addEventListener('click', function() {
-        // Show all sections for printing
-        const sections = document.querySelectorAll('.section');
-        const originalDisplay = [];
-        
-        sections.forEach((section, index) => {
-            originalDisplay[index] = section.style.display;
-            section.style.display = 'block';
-        });
-        
-        // Print
-        window.print();
-        
-        // Restore original display
-        sections.forEach((section, index) => {
-            section.style.display = originalDisplay[index];
-        });
-    });
-    
-    if (header) {
-        header.style.position = 'relative';
-        header.appendChild(printButton);
-    }
-}
 
-// Contact interactions
+
+// Social links interactions
 document.addEventListener('DOMContentLoaded', function() {
-    const contactItems = document.querySelectorAll('.contact-item a');
+    const emailLink = document.querySelector('.email-link');
     
-    contactItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            if (this.href.startsWith('mailto:')) {
-                // Add a small animation for email clicks
-                this.style.animation = 'bounce 0.6s ease';
-                setTimeout(() => {
-                    this.style.animation = '';
-                }, 600);
+    if (emailLink) {
+        emailLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const email = this.getAttribute('data-email');
+            
+            // Try to copy to clipboard
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(email).then(() => {
+                    showEmailCopiedToast();
+                }).catch(() => {
+                    // Fallback to opening email client
+                    window.location.href = `mailto:${email}`;
+                });
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = email;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showEmailCopiedToast();
+                } catch (err) {
+                    // Last resort - open email client
+                    window.location.href = `mailto:${email}`;
+                }
+                document.body.removeChild(textArea);
             }
+            
+            // Add animation
+            this.style.animation = 'pulse 0.6s ease';
+            setTimeout(() => {
+                this.style.animation = '';
+            }, 600);
         });
-    });
+    }
+    
+    // Show toast notification
+    function showEmailCopiedToast() {
+        // Remove any existing toast
+        const existingToast = document.querySelector('.email-toast');
+        if (existingToast) {
+            existingToast.remove();
+        }
+        
+        // Create toast
+        const toast = document.createElement('div');
+        toast.className = 'email-toast';
+        toast.textContent = 'Email copied to clipboard!';
+        toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            animation: slideInRight 0.3s ease;
+        `;
+        
+        document.body.appendChild(toast);
+        
+        // Remove toast after 3 seconds
+        setTimeout(() => {
+            toast.style.animation = 'slideOutRight 0.3s ease';
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 300);
+        }, 3000);
+    }
 
-    // Add bounce animation
+    // Add toast animations
     const style = document.createElement('style');
     style.textContent = `
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
         }
     `;
     document.head.appendChild(style);
@@ -262,18 +293,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Add keyboard navigation
 document.addEventListener('keydown', function(e) {
-    const sections = ['summary', 'experience', 'education', 'skills'];
-    const currentSection = document.querySelector('.nav-link.active')?.getAttribute('href')?.substring(1);
-    const currentIndex = sections.indexOf(currentSection);
+    const currentMainSection = document.querySelector('.main-section.active')?.id;
+    const mainSections = ['resume', 'books', 'gear'];
+    const currentIndex = mainSections.indexOf(currentMainSection);
     
-    if (e.key === 'ArrowRight' && currentIndex < sections.length - 1) {
+    if (e.key === 'ArrowRight' && currentIndex < mainSections.length - 1) {
         e.preventDefault();
-        showSection(sections[currentIndex + 1]);
-        document.querySelector(`[href="#${sections[currentIndex + 1]}"]`).classList.add('active');
+        showMainSection(mainSections[currentIndex + 1]);
     } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
         e.preventDefault();
-        showSection(sections[currentIndex - 1]);
-        document.querySelector(`[href="#${sections[currentIndex - 1]}"]`).classList.add('active');
+        showMainSection(mainSections[currentIndex - 1]);
     }
 });
 
@@ -310,18 +339,16 @@ function handleSwipe() {
     const diff = touchStartX - touchEndX;
     
     if (Math.abs(diff) > swipeThreshold) {
-        const sections = ['summary', 'experience', 'education', 'skills'];
-        const currentSection = document.querySelector('.nav-link.active')?.getAttribute('href')?.substring(1);
-        const currentIndex = sections.indexOf(currentSection);
+        const currentMainSection = document.querySelector('.main-section.active')?.id;
+        const mainSections = ['resume', 'books', 'gear'];
+        const currentIndex = mainSections.indexOf(currentMainSection);
         
-        if (diff > 0 && currentIndex < sections.length - 1) {
+        if (diff > 0 && currentIndex < mainSections.length - 1) {
             // Swipe left - next section
-            showSection(sections[currentIndex + 1]);
-            document.querySelector(`[href="#${sections[currentIndex + 1]}"]`).classList.add('active');
+            showMainSection(mainSections[currentIndex + 1]);
         } else if (diff < 0 && currentIndex > 0) {
             // Swipe right - previous section
-            showSection(sections[currentIndex - 1]);
-            document.querySelector(`[href="#${sections[currentIndex - 1]}"]`).classList.add('active');
+            showMainSection(mainSections[currentIndex - 1]);
         }
     }
 } 

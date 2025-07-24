@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dineshvarma Guduru - Data Engineer</title>
+    <title>Dineshvarma Guduru - Personal Website</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -12,283 +12,292 @@
     <div class="container">
         <!-- Header Section -->
         <header class="header">
-            <div class="profile-section">
-                <div class="profile-info">
+            <div class="header-content">
+                <!-- Name - Left Side -->
+                <div class="header-left">
                     <h1 class="name">Dineshvarma Guduru</h1>
-                    <p class="title">Senior Data Engineer</p>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <a href="mailto:dineshvarma.guduru@gmail.com">dineshvarma.guduru@gmail.com</a>
-                        </div>
-                        <div class="contact-item">
+                </div>
+                
+                <!-- Navigation and Social Links - Right Side -->
+                <div class="header-right">
+                    <!-- Main Navigation -->
+                    <nav class="main-navigation">
+                        <a href="#resume" class="main-nav-link active" data-target="resume">
+                            <i class="fas fa-user"></i>
+                            <span>About Me</span>
+                        </a>
+                        <a href="#books" class="main-nav-link" data-target="books">
+                            <i class="fas fa-book"></i>
+                            <span>Books I Read</span>
+                        </a>
+                        <a href="#gear" class="main-nav-link" data-target="gear">
+                            <i class="fas fa-cogs"></i>
+                            <span>My Gear</span>
+                        </a>
+                    </nav>
+                    
+                    <!-- Social Links -->
+                    <div class="social-links-header">
+                        <a href="https://www.linkedin.com/in/dineshvarma-guduru/" target="_blank" class="social-link" title="LinkedIn Profile">
                             <i class="fab fa-linkedin"></i>
-                            <a href="https://www.linkedin.com/in/dineshvarma-guduru/" target="_blank">LinkedIn Profile</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <span>+91-8939555966</span>
-                        </div>
+                        </a>
+                        <a href="#" class="social-link email-link" title="Copy Email" data-email="dineshvarma.guduru@gmail.com">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@atomicengineering" target="_blank" class="social-link" title="YouTube Channel">
+                            <i class="fab fa-youtube"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-            <nav class="navigation">
-                <a href="#summary" class="nav-link active">Summary</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#education" class="nav-link">Education</a>
-                <a href="#skills" class="nav-link">Skills</a>
-            </nav>
         </header>
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Summary Section -->
-            <section id="summary" class="section active">
-                <h2 class="section-title">
-                    <i class="fas fa-user"></i>
-                    Professional Summary
-                </h2>
-                <div class="summary-content">
-                    <p>Data Engineer with <strong>8+ years of experience</strong> specializing in cloud-native data infrastructure and platform engineering. Demonstrated expertise in architecting scalable data platforms using <strong>Apache Spark, Flink, and Kafka on Kubernetes</strong>, with successful implementations of data warehouse solutions using <strong>Snowflake at petabyte scale</strong>.</p>
-                    
-                    <p>Successful in establishing robust data governance frameworks and implementing comprehensive observability solutions using BigEye and cloud-native monitoring tools. Strong advocate for best practices in software engineering, with extensive experience in the <strong>AWS ecosystem</strong>, focusing on infrastructure as code.</p>
-                </div>
-            </section>
-
-            <!-- Experience Section -->
-            <section id="experience" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-briefcase"></i>
-                    Professional Experience
-                </h2>
-                <div class="experience-timeline">
-                    
-                    <!-- Deliveroo -->
-                    <div class="experience-item">
-                        <div class="company-header">
-                            <h3 class="company-name">Deliveroo</h3>
-                            <span class="location">Hyderabad, India</span>
+            
+            <!-- About Me Section -->
+            <div id="resume" class="main-section active">
+                <div class="about-me-content">
+                    <div class="intro-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-user"></i>
+                            Hello, I am Dinesh
+                        </h2>
+                        <div class="intro-text">
+                            <p class="intro-paragraph">
+                                I'm a passionate <strong>Senior Data Engineer</strong> with over <strong>8 years of experience</strong> building scalable data platforms and cloud-native infrastructure. I specialize in architecting solutions using technologies like <strong>Apache Spark, Snowflake, and AWS</strong>, helping organizations unlock the power of their data at petabyte scale.
+                            </p>
+                            
+                            <p class="intro-paragraph">
+                                Currently working at <strong>Deliveroo</strong>, I lead data platform initiatives that process massive amounts of data while ensuring robust governance and cost optimization. My journey has taken me through exciting roles at companies like <strong>Zoom, Rakuten, and IBM</strong>, where I've consistently delivered impactful solutions that drive business value.
+                            </p>
+                            
+                            <p class="intro-paragraph highlight">
+                                But here's what truly excites me: <strong>teaching and sharing knowledge</strong>. I believe that the best way to grow is by helping others learn. That's why I create educational content on my <strong>YouTube channel "Atomic Engineering"</strong>, where I break down complex data engineering concepts into digestible, practical tutorials. Teaching has not only helped me solidify my own understanding but has also connected me with an amazing community of learners and fellow engineers.
+                            </p>
+                            
+                            <p class="intro-paragraph">
+                                When I'm not architecting data pipelines or creating educational content, you'll find me exploring the latest trends in cloud technologies, contributing to open-source projects, or planning my next tutorial series. I'm always excited to connect with fellow engineers, share experiences, and learn from each other's journeys.
+                            </p>
                         </div>
-                        <div class="role-info">
-                            <h4 class="role-title">Senior Data Engineer - Data Platform</h4>
-                            <span class="duration">Sep 2023 - Present</span>
+                        
+                        <div class="quick-facts">
+                            <div class="fact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Based in Hyderabad, India</span>
+                            </div>
+                            <div class="fact-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Engineering</span>
+                            </div>
+                            <div class="fact-item">
+                                <i class="fas fa-trophy"></i>
+                                <span>University Gold Medalist</span>
+                            </div>
+                            <div class="fact-item">
+                                <i class="fas fa-video"></i>
+                                <span>YouTube Content Creator</span>
+                            </div>
                         </div>
-                        <div class="skills-tags">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">SQL</span>
-                            <span class="skill-tag">Terraform</span>
-                            <span class="skill-tag">Snowflake</span>
-                            <span class="skill-tag">AWS</span>
-                            <span class="skill-tag">Datadog</span>
-                            <span class="skill-tag">Monte Carlo</span>
-                            <span class="skill-tag">Looker</span>
-                        </div>
-                        <ul class="achievements">
-                            <li>Implemented modern cloud based data warehouse using Snowflake and AWS at the organization level</li>
-                            <li>Established robust governance on <strong>4 Petabytes of data</strong> for Personally Identifiable Information (PII) across data storage layers</li>
-                            <li>Designed and implemented Infrastructure as Code (IaC) using Terraform for AWS resource management</li>
-                            <li>Led a team and collaborated with multi-functional teams in Snowflake optimization, resulting in <strong>20% cost reduction</strong></li>
-                            <li>Managed Kubernetes infrastructure on AWS, ensuring scalability and reliability of containerized applications</li>
-                            <li>Developed end-to-end ETL solution for DFW(Deliveroo for Work) product line</li>
-                        </ul>
-                    </div>
-
-                    <!-- Zoom -->
-                    <div class="experience-item">
-                        <div class="company-header">
-                            <h3 class="company-name">Zoom</h3>
-                            <span class="location">Bangalore, India</span>
-                        </div>
-                        <div class="role-info">
-                            <h4 class="role-title">Data Engineer</h4>
-                            <span class="duration">Jan 2022 - Sep 2023</span>
-                        </div>
-                        <div class="skills-tags">
-                            <span class="skill-tag">Spark</span>
-                            <span class="skill-tag">Scala</span>
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Airflow</span>
-                            <span class="skill-tag">Snowpark</span>
-                            <span class="skill-tag">Snowflake</span>
-                            <span class="skill-tag">AWS</span>
-                            <span class="skill-tag">DBT</span>
-                        </div>
-                        <ul class="achievements">
-                            <li>Managed a team to migrate critical data and DAGs from Redshift to Snowflake, achieving <strong>$2 Million annual savings</strong></li>
-                            <li>Developed custom library for data quality and observability across the Data Team</li>
-                            <li>Designed comprehensive data masking solution in Snowflake using native capabilities</li>
-                            <li>Developed highly efficient and scalable ELT data processing framework on Apache Spark</li>
-                            <li>Created custom Python library to track data lineage in Tableau using Tableau API</li>
-                            <li>Created efficient DBT models for large-scale data transformation projects</li>
-                        </ul>
-                    </div>
-
-                    <!-- Rakuten -->
-                    <div class="experience-item">
-                        <div class="company-header">
-                            <h3 class="company-name">Rakuten</h3>
-                            <span class="location">Bangalore, India</span>
-                        </div>
-                        <div class="role-info">
-                            <h4 class="role-title">Data Engineer</h4>
-                            <span class="duration">Jul 2021 - Jan 2022</span>
-                        </div>
-                        <div class="skills-tags">
-                            <span class="skill-tag">Spark</span>
-                            <span class="skill-tag">Scala</span>
-                            <span class="skill-tag">Presto</span>
-                            <span class="skill-tag">Airflow</span>
-                            <span class="skill-tag">MinIO</span>
-                            <span class="skill-tag">Docker</span>
-                            <span class="skill-tag">Kubernetes</span>
-                        </div>
-                        <ul class="achievements">
-                            <li>Built batch data pipelines using Airflow, Scala (Spark), and Python</li>
-                            <li>Leveraged Spark jobs to process compressed data from Hadoop to MinIO datalake</li>
-                            <li>Created and managed delta tables using MinIO as object storage</li>
-                            <li>Optimized data processing on MPP systems and query engines like Presto and Hive</li>
-                        </ul>
-                    </div>
-
-                    <!-- IBM Pearl -->
-                    <div class="experience-item">
-                        <div class="company-header">
-                            <h3 class="company-name">IBM India Software Lab</h3>
-                            <span class="location">Bangalore, India</span>
-                        </div>
-                        <div class="role-info">
-                            <h4 class="role-title">Data Engineer (IBM Pearl)</h4>
-                            <span class="duration">Jul 2018 - Jul 2021</span>
-                        </div>
-                        <div class="skills-tags">
-                            <span class="skill-tag">DataStage</span>
-                            <span class="skill-tag">Spark</span>
-                            <span class="skill-tag">Scala</span>
-                            <span class="skill-tag">DB2</span>
-                            <span class="skill-tag">Airflow</span>
-                            <span class="skill-tag">IBM Cloud</span>
-                            <span class="skill-tag">Docker</span>
-                            <span class="skill-tag">Kubernetes</span>
-                        </div>
-                        <ul class="achievements">
-                            <li>Refactored legacy DataStage ETL jobs serving digital marketing BI dashboards</li>
-                            <li>Migrated and optimized data pipeline jobs processing billions of rows from DataStage to IBM Public Cloud</li>
-                            <li>Designed custom Airflow operator to run Scala/Spark jobs in Kubernetes</li>
-                            <li>Increased productivity by <strong>30%</strong> and reduced error-prone files by <strong>90%</strong></li>
-                            <li>Extracted data from REST APIs and performed complex JSON parsing</li>
-                            <li>Integrated Google Analytics data with enterprise reference data</li>
-                        </ul>
-                    </div>
-
-                    <!-- IBM Service Delivery -->
-                    <div class="experience-item">
-                        <div class="company-header">
-                            <h3 class="company-name">IBM India Pvt. Ltd.</h3>
-                            <span class="location">Chennai, India</span>
-                        </div>
-                        <div class="role-info">
-                            <h4 class="role-title">Service Delivery Engineer</h4>
-                            <span class="duration">Jul 2016 - Jun 2018</span>
-                        </div>
-                        <div class="skills-tags">
-                            <span class="skill-tag">Hadoop</span>
-                            <span class="skill-tag">HDFS</span>
-                            <span class="skill-tag">Pig</span>
-                            <span class="skill-tag">Sqoop</span>
-                            <span class="skill-tag">Hive</span>
-                            <span class="skill-tag">Control-M</span>
-                        </div>
-                        <ul class="achievements">
-                            <li>Worked as Hadoop Developer for Navistar Truck Manufacturing Corporation</li>
-                            <li>Processed data from 13 telematic systems and remote diagnostic systems</li>
-                            <li>Created multiple Sqoop jobs to gather data from various backend databases (SQL, DB2, Informix, Oracle)</li>
-                            <li>Streamlined Hadoop jobs using Control-M workload automation</li>
-                        </ul>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- Education Section -->
-            <section id="education" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-graduation-cap"></i>
-                    Education
-                </h2>
-                <div class="education-item">
-                    <div class="education-header">
-                        <h3 class="institution">Prathyusha Engineering College</h3>
-                        <span class="location">Chennai, India</span>
-                    </div>
-                    <div class="degree-info">
-                        <h4 class="degree">Bachelor of Engineering in Electronics and Communication</h4>
-                        <span class="duration">Aug 2012 - May 2016</span>
-                    </div>
-                    <div class="academic-achievements">
-                        <div class="achievement">
-                            <i class="fas fa-trophy"></i>
-                            <span>CGPA: 8.91/10.0</span>
-                        </div>
-                        <div class="achievement">
-                            <i class="fas fa-medal"></i>
-                            <span>University Gold Medalist in Academics</span>
-                        </div>
-                        <div class="achievement">
-                            <i class="fas fa-star"></i>
-                            <span>Anna University Rank 38</span>
+                        
+                        <div class="cta-section">
+                            <p class="cta-text">
+                                Want to learn more about data engineering? Check out my tutorials, or let's connect and discuss the fascinating world of data!
+                            </p>
+                            <div class="cta-buttons">
+                                <a href="https://www.youtube.com/@atomicengineering" target="_blank" class="cta-button primary">
+                                    <i class="fab fa-youtube"></i>
+                                    Watch My Tutorials
+                                </a>
+                                <a href="https://www.linkedin.com/in/dineshvarma-guduru/" target="_blank" class="cta-button secondary">
+                                    <i class="fab fa-linkedin"></i>
+                                    Let's Connect
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <!-- Skills Section -->
-            <section id="skills" class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-code"></i>
-                    Technical Skills
-                </h2>
-                <div class="skills-grid">
-                    <div class="skill-category">
-                        <h3 class="category-title">Languages</h3>
-                        <div class="skill-items">
-                            <span class="skill-item">Python</span>
-                            <span class="skill-item">Scala</span>
-                            <span class="skill-item">SQL</span>
+            </div> <!-- End About Me Section -->
+            
+            <!-- Books Section -->
+            <div id="books" class="main-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-book"></i>
+                        Books I Read
+                    </h2>
+                    <p class="section-description">A collection of books that have shaped my thinking and professional growth</p>
+                </div>
+                
+                <div class="books-grid">
+                    <div class="book-category">
+                        <h3 class="category-title">
+                            <i class="fas fa-code"></i>
+                            Technical & Programming
+                        </h3>
+                        <div class="book-list">
+                            <div class="book-item placeholder">
+                                <div class="book-cover">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div class="book-details">
+                                    <h4 class="book-title">Book titles coming soon...</h4>
+                                    <p class="book-author">Authors and links will be added here</p>
+                                    <div class="book-tags">
+                                        <span class="book-tag">Programming</span>
+                                        <span class="book-tag">Data Engineering</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="skill-category">
-                        <h3 class="category-title">Distributed Processing</h3>
-                        <div class="skill-items">
-                            <span class="skill-item">Spark 3.x</span>
-                            <span class="skill-item">Snowpark</span>
-                            <span class="skill-item">Dask</span>
+                    <div class="book-category">
+                        <h3 class="category-title">
+                            <i class="fas fa-lightbulb"></i>
+                            Leadership & Personal Development
+                        </h3>
+                        <div class="book-list">
+                            <div class="book-item placeholder">
+                                <div class="book-cover">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div class="book-details">
+                                    <h4 class="book-title">Book titles coming soon...</h4>
+                                    <p class="book-author">Authors and links will be added here</p>
+                                    <div class="book-tags">
+                                        <span class="book-tag">Leadership</span>
+                                        <span class="book-tag">Growth</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="skill-category">
-                        <h3 class="category-title">Big Data Technologies</h3>
-                        <div class="skill-items">
-                            <span class="skill-item">Sqoop</span>
-                            <span class="skill-item">Hive</span>
-                            <span class="skill-item">AWS</span>
-                            <span class="skill-item">Snowflake</span>
-                            <span class="skill-item">Terraform</span>
-                            <span class="skill-item">DBT</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3 class="category-title">Containers & Orchestration</h3>
-                        <div class="skill-items">
-                            <span class="skill-item">Airflow</span>
-                            <span class="skill-item">Prefect</span>
-                            <span class="skill-item">Docker</span>
-                            <span class="skill-item">Kubernetes</span>
+                    <div class="book-category">
+                        <h3 class="category-title">
+                            <i class="fas fa-brain"></i>
+                            Philosophy & Thinking
+                        </h3>
+                        <div class="book-list">
+                            <div class="book-item placeholder">
+                                <div class="book-cover">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div class="book-details">
+                                    <h4 class="book-title">Book titles coming soon...</h4>
+                                    <p class="book-author">Authors and links will be added here</p>
+                                    <div class="book-tags">
+                                        <span class="book-tag">Philosophy</span>
+                                        <span class="book-tag">Critical Thinking</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+            
+            <!-- Gear Section -->
+            <div id="gear" class="main-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-cogs"></i>
+                        My Gear
+                    </h2>
+                    <p class="section-description">Tools, hardware, and software that power my daily work and productivity</p>
+                </div>
+                
+                <div class="gear-grid">
+                    <div class="gear-category">
+                        <h3 class="category-title">
+                            <i class="fas fa-laptop"></i>
+                            Hardware
+                        </h3>
+                        <div class="gear-items">
+                            <div class="gear-item placeholder">
+                                <div class="gear-icon">
+                                    <i class="fas fa-laptop"></i>
+                                </div>
+                                <div class="gear-details">
+                                    <h4 class="gear-name">Hardware items coming soon...</h4>
+                                    <p class="gear-description">Laptops, monitors, keyboards, and other hardware</p>
+                                    <div class="gear-tags">
+                                        <span class="gear-tag">Hardware</span>
+                                        <span class="gear-tag">Productivity</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gear-category">
+                        <h3 class="category-title">
+                            <i class="fas fa-code"></i>
+                            Development Tools
+                        </h3>
+                        <div class="gear-items">
+                            <div class="gear-item placeholder">
+                                <div class="gear-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="gear-details">
+                                    <h4 class="gear-name">Development tools coming soon...</h4>
+                                    <p class="gear-description">IDEs, editors, terminals, and development utilities</p>
+                                    <div class="gear-tags">
+                                        <span class="gear-tag">Development</span>
+                                        <span class="gear-tag">Tools</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gear-category">
+                        <h3 class="category-title">
+                            <i class="fas fa-cloud"></i>
+                            Cloud & Infrastructure
+                        </h3>
+                        <div class="gear-items">
+                            <div class="gear-item placeholder">
+                                <div class="gear-icon">
+                                    <i class="fas fa-cloud"></i>
+                                </div>
+                                <div class="gear-details">
+                                    <h4 class="gear-name">Cloud tools coming soon...</h4>
+                                    <p class="gear-description">AWS services, monitoring tools, and infrastructure</p>
+                                    <div class="gear-tags">
+                                        <span class="gear-tag">Cloud</span>
+                                        <span class="gear-tag">Infrastructure</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gear-category">
+                        <h3 class="category-title">
+                            <i class="fas fa-mobile-alt"></i>
+                            Apps & Services
+                        </h3>
+                        <div class="gear-items">
+                            <div class="gear-item placeholder">
+                                <div class="gear-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="gear-details">
+                                    <h4 class="gear-name">Apps & services coming soon...</h4>
+                                    <p class="gear-description">Productivity apps, communication tools, and services</p>
+                                    <div class="gear-tags">
+                                        <span class="gear-tag">Apps</span>
+                                        <span class="gear-tag">Productivity</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </main>
     </div>
