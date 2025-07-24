@@ -62,7 +62,12 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    color: transparent;
     white-space: nowrap;
+    /* Fallback for browsers that don't support background-clip: text */
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .social-link {
