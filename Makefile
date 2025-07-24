@@ -51,6 +51,11 @@ stop:
 ## Deploy - Commit changes and push to GitHub (triggers GitHub Pages)
 deploy:
 	@echo "🚀 Deploying to GitHub Pages..."
+	@echo "📁 Copying app files to root for GitHub Pages..."
+	@cp app/index.html .
+	@cp app/style.css .
+	@cp app/script.js .
+	@cp -r app/images . 2>/dev/null || true
 	@echo "📝 Adding all changes..."
 	@git add .
 	@echo "💬 Enter commit message (or press Enter for default):"
