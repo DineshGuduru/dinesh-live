@@ -20,11 +20,20 @@ Visit the live resume at: [https://dineshvarmaguduru.github.io/dinesh-live/](htt
 
 ```
 dinesh-live/
-├── index.html          # Main HTML structure
-├── style.css           # CSS styles and animations
-├── script.js           # JavaScript functionality
-├── README.md           # Project documentation
-└── LICENSE             # License file
+├── app/                # Application files
+│   ├── index.html      # Main HTML structure
+│   ├── style.css       # CSS styles and animations
+│   ├── script.js       # JavaScript functionality
+│   └── images/         # Static images and assets
+├── docker/             # Docker configuration
+│   ├── Dockerfile      # Docker container configuration
+│   ├── docker-compose.yml # Docker orchestration
+│   ├── docker-build.sh # Docker build script
+│   ├── nginx.conf      # Nginx web server configuration
+│   └── .dockerignore   # Docker ignore patterns
+├── Makefile           # Build and deployment automation
+├── README.md          # Project documentation
+└── LICENSE            # License file
 ```
 
 ## 🛠️ Technologies Used
@@ -89,22 +98,107 @@ To run this project locally:
    ```
 
 2. **Open in browser**
-   - Simply open `index.html` in your web browser
+   - Simply open `app/index.html` in your web browser
    - Or use a local server for better development experience:
    
    ```bash
    # Using Python 3
-   python -m http.server 8000
+   cd app && python -m http.server 8000
    
    # Using Node.js (if you have live-server installed)
-   npx live-server
+   cd app && npx live-server
    
    # Using PHP
-   php -S localhost:8000
+   cd app && php -S localhost:8000
    ```
 
 3. **Access the site**
    - Open `http://localhost:8000` in your browser
+
+## ⚡ Quick Start with Makefile
+
+This project includes a Makefile for simplified development workflow:
+
+```bash
+# Start the server in one command
+make run
+
+# View all available commands
+make help
+```
+
+### Available Make Commands
+- `make run` - Start the website server (Docker)
+- `make build` - Build the Docker image  
+- `make stop` - Stop the running container
+- `make deploy` - Deploy to GitHub Pages (commit & push)
+- `make status` - Check container status
+- `make logs` - View container logs
+- `make clean` - Clean up Docker resources
+- `make dev` - Start local development server (Python)
+
+After running `make run`, visit: **http://localhost:8080**
+
+## 🐳 Docker Development
+
+This project includes a complete Docker setup for easy deployment and development.
+
+### Docker Files Overview
+- `docker/Dockerfile` - Creates an nginx-based container
+- `docker/docker-compose.yml` - Orchestration configuration  
+- `docker/docker-build.sh` - Automated build script
+- `docker/nginx.conf` - Custom nginx configuration
+
+### Method 1: Using the Build Script (Easiest)
+```bash
+# Make the script executable and run it
+chmod +x docker/docker-build.sh
+cd docker && ./docker-build.sh
+```
+
+This will build the image and display next steps.
+
+### Method 2: Using Docker Compose (Recommended)
+```bash
+# Build and start the container
+docker compose -f docker/docker-compose.yml up -d
+
+# View logs
+docker compose -f docker/docker-compose.yml logs -f
+
+# Stop the container
+docker compose -f docker/docker-compose.yml down
+```
+
+### Method 3: Manual Docker Commands
+```bash
+# Build the image
+docker build -t dinesh-live:latest .
+
+# Run the container
+docker run -p 8080:80 dinesh-live:latest
+
+# Or run in detached mode
+docker run -d -p 8080:80 --name dinesh-live dinesh-live:latest
+```
+
+### Access Your Dockerized Website
+After running any of the above methods, visit: **http://localhost:8080**
+
+### Container Features
+- ✅ Nginx web server with optimized configuration
+- ✅ Gzip compression for faster loading
+- ✅ Security headers configured
+- ✅ Static file caching optimization
+- ✅ Health checks for container monitoring
+- ✅ Auto-restart on failure
+- ✅ Production-ready setup
+
+### Docker Environment
+- **Base Image**: nginx:alpine (lightweight)
+- **Port**: 8080 (host) → 80 (container)
+- **Health Check**: Automated container health monitoring
+- **Labels**: Traefik-ready for reverse proxy setups
 
 ## 🎯 Customization
 
