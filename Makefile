@@ -1,51 +1,44 @@
 # Makefile for Dinesh's Personal Website
 # Usage: make <command>
 
-.PHONY: help run build stop deploy clean status logs dev restart rebuild
+.PHONY: help dev stop clean push status logs check
 
 # Default target
 .DEFAULT_GOAL := help
 
 # Docker settings
-IMAGE_NAME := dinesh-live
-CONTAINER_NAME := dinesh-personal-website
-PORT := 8080
-
-# Auto-detect docker compose command (newer Docker uses 'docker compose', older uses 'docker-compose')
 DOCKER_COMPOSE := $(shell if command -v docker-compose >/dev/null 2>&1; then echo "docker-compose"; else echo "docker compose"; fi)
 DOCKER_COMPOSE_FILE := docker/docker-compose.yml
+PORT := 8080
 
 ## Help - Show available commands
 help:
-	@echo "🚀 Dinesh's Personal Website - Make Commands"
+	@echo "🚀 Dinesh's Personal Website - Simplified Commands"
 	@echo ""
-	@echo "Available commands:"
-	@echo "  make run         - Start website server (Docker, full setup)"
-	@echo "  make clean-run   - Clean up and run the website server"
-	@echo "  make build       - Build the Docker image"
-	@echo "  make deploy      - Deploy to GitHub Pages via Docker"
-	@echo "  make stop        - Stop the running container"
-	@echo "  make status      - Check container status"
-	@echo "  make logs        - View container logs"
-	@echo "  make clean       - Clean up Docker resources"
+	@echo "🔥 Essential Commands:"
+	@echo "  make dev         - 🚀 Main development workflow (rebuild + serve)"
+	@echo "  make stop        - 🛑 Stop the server"
+	@echo "  make clean       - 🧹 Clean up all Docker resources"
+	@echo "  make push        - ⬆️  Deploy to GitHub Pages"
 	@echo ""
-	@echo "🌐 Development: http://localhost:8000 (dev) or http://localhost:$(PORT) (run)"
+	@echo "📊 Monitoring:"
+	@echo "  make status      - 📈 Check container status"
+	@echo "  make logs        - 📋 View container logs"
+	@echo ""
+	@echo "🔧 Optional:"
+	@echo "  make check       - ✅ Validate config.yml syntax"
+	@echo ""
+	@echo "🌐 Development server: http://localhost:$(PORT)"
+	@echo "💡 Start with: make dev"
 
-## Run - Start the website server using Docker Compose
-run:
+## Dev - Main development workflow (rebuild website + run server)
+dev:
+	@echo "🔄 Starting development workflow..."
+	@echo "📦 Rebuilding website with updated templates in Docker..."
+	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) build --no-cache
 	@echo "🚀 Starting website server..."
 	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) up -d
-	@echo "✅ Server running at http://localhost:$(PORT)"
-
-## Clean-run - Clean up and run the website server
-clean-run:
-	make clean
-	make run
-
-## Build - Build the Docker image
-build:
-	@echo "🔨 Building Docker image..."
-	@docker build -f docker/Dockerfile -t $(IMAGE_NAME):latest .
+	@echo "✅ Development server ready! Visit http://localhost:$(PORT)"
 
 ## Stop - Stop the running container
 stop:
@@ -53,8 +46,15 @@ stop:
 	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) down
 	@echo "✅ Server stopped!"
 
-## Deploy - Commit changes and push to GitHub (triggers Docker-based GitHub Pages deployment)
-deploy:
+## Clean - Clean up all Docker resources
+clean:
+	@echo "🧹 Cleaning up Docker resources..."
+	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) down --rmi all --volumes --remove-orphans 2>/dev/null || true
+	@docker system prune -f
+	@echo "✅ Cleanup completed!"
+
+## Push - Commit changes and push to GitHub (triggers deployment)
+push:
 	@echo "🚀 Deploying to GitHub Pages..."
 	@git add .
 	@read -p "💬 Commit message (or press Enter for default): " msg; \
@@ -76,13 +76,8 @@ logs:
 	@echo "📋 Container Logs:"
 	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) logs -f
 
-## Clean - Clean up Docker resources
-clean:
-	@echo "🧹 Cleaning up Docker resources..."
-	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) down --rmi all --volumes --remove-orphans 2>/dev/null || true
-	@docker system prune -f
-	@echo "✅ Cleanup completed!"
-
-## Quick commands for common tasks
-restart: stop run
-rebuild: clean build run 
+## Check - Validate YAML syntax (optional, requires Python)
+check:
+	@echo "🔍 Checking config.yml syntax..."
+	@command -v python3 >/dev/null 2>&1 || { echo "❌ Python3 not found. Skipping YAML validation."; exit 0; }
+	@cd app && python3 -c "import yaml; yaml.safe_load(open('config.yml'))" 2>/dev/null && echo "✅ YAML syntax is valid!" || echo "❌ YAML validation failed or PyYAML not installed"

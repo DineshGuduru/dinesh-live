@@ -1,0 +1,203 @@
+books:
+  categories:
+    - name: "Technical & Programming"
+      icon: "fas fa-code"
+      products:
+        - name: "Designing Data-Intensive Applications"
+          author: "Martin Kleppmann"
+          description: "The big ideas behind reliable, scalable, and maintainable systems"
+          image_path: "images/books/technical/designing-data-intensive-applications.jpg"
+          amazon_url: "https://amzn.to/41c7vJw"
+          tags: ["Data Systems", "Architecture", "Scalability"]
+          fallback_icon: "fas fa-database"
+          fallback_gradient: "linear-gradient(135deg, #4f46e5, #7c3aed)"
+        
+        - name: "System Design Interview - An Insider's Guide"
+          author: "Alex Xu"
+          description: "Learn how to ace system design interviews at top tech companies"
+          image_path: "images/books/technical/system-design-interview-vol1.jpg"
+          amazon_url: "https://amzn.to/4f2Shw9"
+          tags: ["System Design", "Interviews", "Architecture"]
+          fallback_icon: "fas fa-sitemap"
+          fallback_gradient: "linear-gradient(135deg, #ef4444, #dc2626)"
+        
+        - name: "System Design Interview – An Insider's Guide: Volume 2"
+          author: "Alex Xu & Sahn Lam"
+          description: "Advanced system design concepts and real-world case studies"
+          image_path: "images/books/technical/system-design-interview-vol2.jpg"
+          amazon_url: "https://amzn.to/3ILSIil"
+          tags: ["Advanced Systems", "Case Studies", "Distributed Systems"]
+          fallback_icon: "fas fa-network-wired"
+          fallback_gradient: "linear-gradient(135deg, #06b6d4, #0891b2)"
+        
+        - name: "Fundamentals of Data Engineering"
+          author: "Joe Reis & Matt Housley"
+          description: "Plan and build robust data systems that serve your organization's needs"
+          image_path: "images/books/technical/fundamentals-data-engineering.jpg"
+          amazon_url: "https://amzn.to/3H1cRAw"
+          tags: ["Data Engineering", "Data Pipeline", "Best Practices"]
+          fallback_icon: "fas fa-chart-line"
+          fallback_gradient: "linear-gradient(135deg, #f59e0b, #d97706)"
+
+    - name: "Leadership & Personal Development"
+      icon: "fas fa-lightbulb"
+      products:
+        - name: "Psychology of Money"
+          author: "Morgan Housel"
+          description: "Timeless lessons on wealth, greed, and happiness"
+          image_path: "images/books/leadership/psychology-of-money.jpg"
+          amazon_url: "https://amzn.to/453H75T"
+          tags: ["Money", "Psychology", "Finance"]
+          fallback_icon: "fas fa-dollar-sign"
+          fallback_gradient: "linear-gradient(135deg, #10b981, #059669)"
+        
+        - name: "How to Win Friends and Influence People"
+          author: "Dale Carnegie"
+          description: "The classic guide to building relationships and leadership skills"
+          image_path: "images/books/leadership/how-to-win-friends.jpg"
+          amazon_url: "https://amzn.to/455KMjJ"
+          tags: ["Leadership", "Communication", "Relationships"]
+          fallback_icon: "fas fa-handshake"
+          fallback_gradient: "linear-gradient(135deg, #3b82f6, #2563eb)"
+        
+        - name: "Talk Like TED"
+          author: "Carmine Gallo"
+          description: "The 9 public speaking secrets of the world's top minds"
+          image_path: "images/books/leadership/talk-like-ted.jpg"
+          amazon_url: "https://amzn.to/4kX4FiQ"
+          tags: ["Public Speaking", "Presentation", "Communication"]
+          fallback_icon: "fas fa-microphone"
+          fallback_gradient: "linear-gradient(135deg, #ef4444, #dc2626)"
+        
+        - name: "The Making of a Manager"
+          author: "Julie Zhuo"
+          description: "What to do when everyone looks to you for guidance"
+          image_path: "images/books/leadership/making-of-manager.jpg"
+          amazon_url: "https://amzn.to/4mfk4fq"
+          tags: ["Management", "Leadership", "Career Growth"]
+          fallback_icon: "fas fa-user-tie"
+          fallback_gradient: "linear-gradient(135deg, #8b5cf6, #7c3aed)"
+
+    - name: "Philosophy & Thinking"
+      icon: "fas fa-brain"
+      products:
+        - name: "Atomic Habits"
+          author: "James Clear"
+          description: "An easy & proven way to build good habits & break bad ones"
+          image_path: "images/books/philosophy/atomic-habits.jpg"
+          amazon_url: "https://amzn.to/4leBkAF"
+          tags: ["Habits", "Personal Development", "Productivity"]
+          fallback_icon: "fas fa-sync-alt"
+          fallback_gradient: "linear-gradient(135deg, #10b981, #059669)"
+        
+        - name: "Sapiens: A Brief History of Humankind"
+          author: "Yuval Noah Harari"
+          description: "How did we conquer the world and what did we lose along the way?"
+          image_path: "images/books/philosophy/sapiens.jpg"
+          amazon_url: "https://amzn.to/4f6I81I"
+          tags: ["History", "Anthropology", "Philosophy"]
+          fallback_icon: "fas fa-users"
+          fallback_gradient: "linear-gradient(135deg, #8b5cf6, #7c3aed)"
+        
+        - name: "Rework"
+          author: "Jason Fried & David Heinemeier Hansson"
+          description: "A better, faster, easier way to succeed in business"
+          image_path: "images/books/philosophy/rework.jpg"
+          amazon_url: "https://amzn.to/3GIvlG1"
+          tags: ["Business", "Entrepreneurship", "Productivity"]
+          fallback_icon: "fas fa-rocket"
+          fallback_gradient: "linear-gradient(135deg, #f59e0b, #d97706)"
+        
+        - name: "Think and Grow Rich"
+          author: "Napoleon Hill"
+          description: "The timeless classic on wealth building and success principles"
+          image_path: "images/books/philosophy/think-and-grow-rich.jpg"
+          amazon_url: "https://amzn.to/4ma5TrM"
+          tags: ["Success", "Wealth", "Mindset"]
+          fallback_icon: "fas fa-crown"
+          fallback_gradient: "linear-gradient(135deg, #dc2626, #b91c1c)"
+
+gear:
+  categories:
+    - name: "Hardware"
+      icon: "fas fa-laptop"
+      products:
+        - name: "MacBook Pro M4"
+          manufacturer: "Apple"
+          description: "Powerful laptop for development and data engineering work"
+          image_path: "images/hardware/macbook-pro-m4.jpg"
+          amazon_url: "https://amzn.to/455OOsa"
+          tags: ["Laptop", "Development", "Apple"]
+          fallback_icon: "fas fa-laptop"
+          fallback_gradient: "linear-gradient(135deg, #6b7280, #4b5563)"
+        
+        - name: "iPhone 15"
+          manufacturer: "Apple"
+          description: "Primary smartphone for communication and mobile productivity"
+          image_path: "images/hardware/iphone-15.jpg"
+          amazon_url: "https://amzn.to/4mfYRSE"
+          tags: ["Smartphone", "Mobile", "Apple"]
+          fallback_icon: "fas fa-mobile-alt"
+          fallback_gradient: "linear-gradient(135deg, #3b82f6, #2563eb)"
+        
+        - name: "iPad Air M3"
+          manufacturer: "Apple"
+          description: "Versatile tablet for note-taking, reading, and presentations"
+          image_path: "images/hardware/ipad-air-m3.jpg"
+          amazon_url: "https://amzn.to/3TXtkIY"
+          tags: ["Tablet", "Productivity", "Apple"]
+          fallback_icon: "fas fa-tablet-alt"
+          fallback_gradient: "linear-gradient(135deg, #8b5cf6, #7c3aed)"
+        
+        - name: "Magic Keyboard for iPad"
+          manufacturer: "Apple"
+          description: "Premium keyboard case that transforms iPad into laptop-like experience"
+          image_path: "images/hardware/magic-keyboard-ipad.jpg"
+          amazon_url: "https://amzn.to/4mwCicz"
+          tags: ["Keyboard", "Accessory", "Apple"]
+          fallback_icon: "fas fa-keyboard"
+          fallback_gradient: "linear-gradient(135deg, #059669, #047857)"
+        
+        - name: "Apple Pencil Pro"
+          manufacturer: "Apple"
+          description: "Advanced stylus for precise note-taking and creative work on iPad"
+          image_path: "images/hardware/apple-pencil-pro.jpg"
+          amazon_url: "https://amzn.to/4f7NfyG"
+          tags: ["Stylus", "Creative", "Apple"]
+          fallback_icon: "fas fa-pen"
+          fallback_gradient: "linear-gradient(135deg, #f59e0b, #d97706)"
+        
+        - name: "Samsung Monitor"
+          manufacturer: "Samsung"
+          description: "High-quality external display for enhanced productivity and development work"
+          image_path: "images/hardware/samsung-monitor.jpg"
+          amazon_url: "https://amzn.to/4fd5suQ"
+          tags: ["Monitor", "Display", "Samsung"]
+          fallback_icon: "fas fa-desktop"
+          fallback_gradient: "linear-gradient(135deg, #ef4444, #dc2626)"
+
+
+    - name: "Apps"
+      icon: "fas fa-mobile-alt"
+      products: []
+
+# Site configuration
+site:
+  books_intro: "A carefully curated collection of books that have fundamentally shaped my thinking, influenced my professional journey, and continue to guide my approach to data engineering and personal development."
+  books_cta_text: "These aren't just theoretical reads—they're battle-tested knowledge that has directly contributed to my successful data engineering career and personal growth, from project deliveries and architectural decisions to leadership development and effective communication in my 9+ year journey."
+  books_philosophy:
+    - title: "Continuous Learning"
+      icon: "fas fa-lightbulb"
+      description: "I believe that excelling in both technical expertise and personal development requires constant learning from the best minds. These books represent foundational knowledge spanning data engineering, leadership, and personal growth."
+    
+    - title: "Knowledge Sharing"
+      icon: "fas fa-share-alt"
+      description: "Just as I share knowledge through my YouTube channel, I'm passionate about recommending resources that have genuinely impacted both my technical career and personal development, helping others accelerate their complete professional journey."
+    
+    - title: "Practical Application"
+      icon: "fas fa-rocket"
+      description: "Each of these books offers immediately applicable insights for both career and personal growth. I've implemented concepts from technical architecture to effective communication in real-world projects at companies like Deliveroo, Zoom, and IBM."
+
+  gear_intro: "A carefully selected collection of tools that form the backbone of my peak productivity across all my daily tasks."
+  gear_cta_text: ""
+  gear_philosophy: [] 

@@ -1,3 +1,6 @@
+# Generated files (built from templates in Docker)
+app/index.html
+
 # GitHub Pages now uses Docker deployment via GitHub Actions
 # No need to ignore deployment artifacts
 
