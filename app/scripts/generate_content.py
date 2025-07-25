@@ -13,6 +13,8 @@ Usage:
 import yaml
 import re
 from pathlib import Path
+import markdown
+from datetime import datetime
 
 def load_template(template_name):
     """Load a template file from the templates directory"""
@@ -25,6 +27,71 @@ def load_config():
     config_path = Path(__file__).parent.parent / 'config.yml'
     with open(config_path, 'r', encoding='utf-8') as file:
         return yaml.safe_load(file)
+
+def load_blog_post(post_path):
+    """Load and parse a blog post markdown file"""
+    with open(post_path, 'r', encoding='utf-8') as file:
+        content = file.read()
+        
+    # Parse front matter if exists (you can add this later)
+    # For now, we'll use the filename and modification time
+    post_name = post_path.stem.replace('-', ' ').title()
+    post_date = datetime.fromtimestamp(post_path.stat().st_mtime)
+    
+    # Convert markdown to HTML
+    html_content = markdown.markdown(content)
+    
+    # Save the HTML version
+    html_path = post_path.with_suffix('.html')
+    with open(html_path, 'w', encoding='utf-8') as file:
+        file.write(html_content)
+    
+    return {
+        'title': post_name,
+        'date': post_date.strftime('%B %d, %Y'),
+        'description': content.split('\n\n')[1][:200] + '...',  # First paragraph as description
+        'html_path': html_path.relative_to(Path(__file__).parent.parent),
+        'image_path': 'images/blog/default-blog-image.jpg'  # You can customize this later
+    }
+
+def generate_blog_post_html(post):
+    """Generate HTML for a single blog post"""
+    template = load_template('blog_post')
+    
+    return template.format(
+        image_path=post['image_path'],
+        title=post['title'],
+        date=post['date'],
+        description=post['description'],
+        read_more_link=str(post['html_path'])
+    )
+
+def generate_blog_section_html(config):
+    """Generate the complete blog section HTML"""
+    site_config = config.get('site', {})
+    blog_config = config.get('blog', {})
+    template = load_template('blog_list')
+    
+    # Get all markdown files in the blog directory
+    blog_dir = Path(__file__).parent.parent / 'blog'
+    blog_posts = []
+    
+    if blog_dir.exists():
+        for post_file in blog_dir.glob('*.md'):
+            blog_posts.append(load_blog_post(post_file))
+    
+    # Sort posts by date (newest first)
+    blog_posts.sort(key=lambda x: datetime.strptime(x['date'], '%B %d, %Y'), reverse=True)
+    
+    # Generate blog posts content
+    blog_posts_content = ""
+    for post in blog_posts:
+        blog_posts_content += '\n' + generate_blog_post_html(post)
+    
+    return template.format(
+        blog_intro=site_config.get('blog_intro', 'Welcome to my blog where I share insights about technology, engineering, and personal growth.'),
+        blog_posts_content=blog_posts_content
+    )
 
 def generate_book_html(book):
     """Generate HTML for a single book"""
@@ -201,6 +268,7 @@ def generate_complete_html(config):
     about_template = load_template('about')
     
     # Generate dynamic sections
+    blog_html = generate_blog_section_html(config)
     books_html = generate_books_section_html(config)
     gear_html = generate_gear_section_html(config)
     
@@ -208,6 +276,7 @@ def generate_complete_html(config):
     complete_html = base_template.format(
         header_content=header_template,
         about_content=about_template,
+        blog_content=blog_html,
         books_content=books_html,
         gear_content=gear_html
     )

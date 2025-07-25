@@ -183,6 +183,7 @@ gear:
 
 # Site configuration
 site:
+  blog_intro: "Welcome to my blog where I share insights about data engineering, technology, and personal growth. Here you'll find detailed technical tutorials, industry best practices, and lessons learned from my experience."
   books_intro: "A carefully curated collection of books that have fundamentally shaped my thinking, influenced my professional journey, and continue to guide my approach to data engineering and personal development."
   books_cta_text: "These aren't just theoretical reads—they're battle-tested knowledge that has directly contributed to my successful data engineering career and personal growth, from project deliveries and architectural decisions to leadership development and effective communication in my 9+ year journey."
   books_philosophy:
