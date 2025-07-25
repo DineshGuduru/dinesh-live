@@ -19,9 +19,4 @@ services:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
       interval: 30s
       timeout: 10s
-      retries: 3
-      start_period: 40s
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.dinesh-live.rule=Host(`dineshvarma.local`)"
-      - "traefik.http.services.dinesh-live.loadbalancer.server.port=80" 
+      retries: 3 

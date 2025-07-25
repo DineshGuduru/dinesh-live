@@ -35,6 +35,35 @@ def estimate_reading_time(content):
     reading_time = math.ceil(words / 200)  # Assuming 200 words per minute
     return max(1, reading_time)  # Minimum 1 minute
 
+def generate_tag_html(tag):
+    """Generate HTML for a single tag with icon based on tag type"""
+    icon_map = {
+        'technical': 'fas fa-code',
+        'data-engineering': 'fas fa-database',
+        'python': 'fab fa-python',
+        'orchestration': 'fas fa-cogs',
+        'prefect': 'fas fa-stream',
+        'tutorial': 'fas fa-graduation-cap',
+        'guide': 'fas fa-book',
+        'best-practices': 'fas fa-check-circle',
+        'career': 'fas fa-briefcase',
+        'development': 'fas fa-laptop-code',
+        'cloud': 'fas fa-cloud',
+        'architecture': 'fas fa-sitemap',
+        'devops': 'fas fa-tools',
+        'security': 'fas fa-shield-alt',
+        'performance': 'fas fa-tachometer-alt',
+        'testing': 'fas fa-vial',
+        'deployment': 'fas fa-rocket',
+        'monitoring': 'fas fa-chart-line',
+        'automation': 'fas fa-robot',
+        'infrastructure': 'fas fa-server',
+    }
+    
+    # Get icon or default to tag icon
+    icon = icon_map.get(tag.lower(), 'fas fa-tag')
+    return f'<span class="tag"><i class="{icon}"></i> {tag}</span>'
+
 def load_blog_post(post_path):
     """Load and parse a blog post markdown file"""
     with open(post_path, 'r', encoding='utf-8') as file:
@@ -66,15 +95,13 @@ def load_blog_post(post_path):
     else:
         post_date = datetime.fromtimestamp(post_path.stat().st_mtime).strftime('%B %d, %Y')
     
-    # Convert markdown to HTML
-    html_content = markdown.markdown(body, extensions=['fenced_code', 'tables'])
+    # Convert markdown to HTML with extensions
+    html_content = markdown.markdown(body, extensions=['fenced_code', 'tables', 'codehilite'])
     reading_time = estimate_reading_time(body)
     
-    # Generate tags HTML if available
+    # Generate tags HTML with icons
     tags = frontmatter.get('tags', [])
-    tags_html = ''
-    if tags:
-        tags_html = ''.join([f'<span class="tag">{tag}</span>' for tag in tags])
+    tags_html = ''.join(generate_tag_html(tag) for tag in tags) if tags else ''
     
     # Generate the blog post HTML using the template
     blog_content_template = load_template('blog_content')
@@ -96,7 +123,7 @@ def load_blog_post(post_path):
         'date': post_date,
         'description': frontmatter.get('description') or body.split('\n\n')[1][:200] + '...',
         'html_path': html_path.relative_to(Path(__file__).parent.parent),
-        'image_path': frontmatter.get('image_path'),  # Remove default fallback
+        'image_path': frontmatter.get('image_path'),
         'reading_time': reading_time
     }
 
