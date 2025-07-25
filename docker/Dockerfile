@@ -1,36 +1,46 @@
-# Stage 1: Generate HTML from templates
-FROM python:3.11-alpine AS generator
+# Stage 1: Generate static content
+FROM python:3.11-alpine as generator
 
-# Install dependencies
+# Install git for potential use in the build process
 RUN apk add --no-cache git
 
-# Set working directory
 WORKDIR /app
 
-# Copy requirements and install Python dependencies
+# Copy requirements first to leverage Docker cache
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application files
 COPY app/ .
 
-# Generate the complete index.html from templates
+# Create necessary directories
+RUN mkdir -p images/blog
+
+# Generate the complete index.html and blog HTML files from templates
 RUN python scripts/generate_content.py
 
 # Stage 2: Serve with nginx
 FROM nginx:alpine
 
-# Set the working directory
+# Copy nginx configuration
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+
+# Set working directory
 WORKDIR /usr/share/nginx/html
 
 # Remove default nginx static assets
 RUN rm -rf ./*
 
-# Copy generated website files from the generator stage
+# Copy generated files from builder
 COPY --from=generator /app/ .
 
-# Copy custom nginx configuration
-COPY docker/nginx.conf /etc/nginx/nginx.conf
+# Create necessary directories and set permissions
+RUN mkdir -p /var/log/nginx \
+    && chown -R nginx:nginx /var/log/nginx \
+    && chown -R nginx:nginx /usr/share/nginx/html
+
+# Switch to non-root user
+USER nginx
 
 # Expose port 80
 EXPOSE 80

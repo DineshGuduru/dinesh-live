@@ -1,24 +1,22 @@
 version: '3.8'
 
 services:
-  dinesh-live:
+  web:
+    container_name: dinesh-personal-website
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    container_name: dinesh-personal-website
     ports:
       - "8080:80"
     restart: unless-stopped
     environment:
       - NGINX_HOST=localhost
       - NGINX_PORT=80
+    volumes:
+      - ../app/blog:/usr/share/nginx/html/blog:ro
+      - ../app/images:/usr/share/nginx/html/images:ro
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
       interval: 30s
       timeout: 10s
-      retries: 3
-      start_period: 40s
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.dinesh-live.rule=Host(`dineshvarma.local`)"
-      - "traefik.http.services.dinesh-live.loadbalancer.server.port=80" 
+      retries: 3 
