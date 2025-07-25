@@ -1,7 +1,7 @@
 # Makefile for Dinesh's Personal Website
 # Usage: make <command>
 
-.PHONY: help dev stop clean push status logs check
+.PHONY: help dev stop clean push pull status logs check
 
 # Default target
 .DEFAULT_GOAL := help
@@ -19,7 +19,8 @@ help:
 	@echo "  make dev         - 🚀 Main development workflow (rebuild + serve)"
 	@echo "  make stop        - 🛑 Stop the server"
 	@echo "  make clean       - 🧹 Clean up all Docker resources"
-	@echo "  make push        - ⬆️  Deploy to GitHub Pages"
+	@echo "  make push        - ⬆️  Push changes to current branch"
+	@echo "  make pull        - ⬇️  Pull latest changes from current branch"
 	@echo ""
 	@echo "📊 Monitoring:"
 	@echo "  make status      - 📈 Check container status"
@@ -67,6 +68,14 @@ push:
 	echo "📤 Pushing to branch: $$CURRENT_BRANCH"; \
 	git push origin "$$CURRENT_BRANCH"
 	@echo "✅ Deployment started! Check status at: https://github.com/DineshGuduru/dinesh-live/actions"
+
+## Pull - Pull latest changes from current branch
+pull:
+	@echo "🔄 Pulling latest changes..."
+	@CURRENT_BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	echo "📥 Pulling from branch: $$CURRENT_BRANCH"; \
+	git pull origin "$$CURRENT_BRANCH"
+	@echo "✅ Pull completed!"
 
 ## Status - Check container status
 status:
