@@ -20,8 +20,8 @@ help:
 	@echo "🚀 Dinesh's Personal Website - Make Commands"
 	@echo ""
 	@echo "Available commands:"
-	@echo "  make dev         - Start development server (Python, fast)"
 	@echo "  make run         - Start website server (Docker, full setup)"
+	@echo "  make clean-run   - Clean up and run the website server"
 	@echo "  make build       - Build the Docker image"
 	@echo "  make deploy      - Deploy to GitHub Pages via Docker"
 	@echo "  make stop        - Stop the running container"
@@ -36,6 +36,11 @@ run:
 	@echo "🚀 Starting website server..."
 	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) up -d
 	@echo "✅ Server running at http://localhost:$(PORT)"
+
+## Clean-run - Clean up and run the website server
+clean-run:
+	make clean
+	make run
 
 ## Build - Build the Docker image
 build:
@@ -77,14 +82,6 @@ clean:
 	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) down --rmi all --volumes --remove-orphans 2>/dev/null || true
 	@docker system prune -f
 	@echo "✅ Cleanup completed!"
-
-
-
-## Dev - Start local development server (Python)
-dev:
-	@echo "🔧 Starting development server at http://localhost:8000"
-	@echo "🛑 Press Ctrl+C to stop"
-	@cd app && python3 -m http.server 8000
 
 ## Quick commands for common tasks
 restart: stop run

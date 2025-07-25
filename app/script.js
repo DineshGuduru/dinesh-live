@@ -45,14 +45,14 @@ function initMainNavigation() {
     // Handle hash changes for main navigation
     window.addEventListener('hashchange', function() {
         const hash = window.location.hash.substring(1);
-        if (hash && ['resume', 'books', 'gear'].includes(hash)) {
+        if (hash && ['about', 'books', 'gear'].includes(hash)) {
             showMainSection(hash);
         }
     });
 
     // Check for initial hash
     const initialHash = window.location.hash.substring(1);
-    if (initialHash && ['resume', 'books', 'gear'].includes(initialHash)) {
+    if (initialHash && ['about', 'books', 'gear'].includes(initialHash)) {
         showMainSection(initialHash);
     }
 }
@@ -166,117 +166,6 @@ function initSkillInteractions() {
 }
 
 
-
-// Social links interactions
-document.addEventListener('DOMContentLoaded', function() {
-    const emailLink = document.querySelector('.email-link');
-    
-    if (emailLink) {
-        emailLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const email = this.getAttribute('data-email');
-            
-            // Try to copy to clipboard
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(email).then(() => {
-                    showEmailCopiedToast();
-                }).catch(() => {
-                    // Fallback to opening email client
-                    window.location.href = `mailto:${email}`;
-                });
-            } else {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = email;
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    showEmailCopiedToast();
-                } catch (err) {
-                    // Last resort - open email client
-                    window.location.href = `mailto:${email}`;
-                }
-                document.body.removeChild(textArea);
-            }
-            
-            // Add animation
-            this.style.animation = 'pulse 0.6s ease';
-            setTimeout(() => {
-                this.style.animation = '';
-            }, 600);
-        });
-    }
-    
-    // Show toast notification
-    function showEmailCopiedToast() {
-        // Remove any existing toast
-        const existingToast = document.querySelector('.email-toast');
-        if (existingToast) {
-            existingToast.remove();
-        }
-        
-        // Create toast
-        const toast = document.createElement('div');
-        toast.className = 'email-toast';
-        toast.textContent = 'Email copied to clipboard!';
-        toast.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            animation: slideInRight 0.3s ease;
-        `;
-        
-        document.body.appendChild(toast);
-        
-        // Remove toast after 3 seconds
-        setTimeout(() => {
-            toast.style.animation = 'slideOutRight 0.3s ease';
-            setTimeout(() => {
-                if (toast.parentNode) {
-                    toast.parentNode.removeChild(toast);
-                }
-            }, 300);
-        }, 3000);
-    }
-
-    // Add toast animations
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes slideOutRight {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-});
-
 // Smooth scrolling for all internal links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -294,7 +183,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Add keyboard navigation
 document.addEventListener('keydown', function(e) {
     const currentMainSection = document.querySelector('.main-section.active')?.id;
-    const mainSections = ['resume', 'books', 'gear'];
+    const mainSections = ['about', 'books', 'gear'];
     const currentIndex = mainSections.indexOf(currentMainSection);
     
     if (e.key === 'ArrowRight' && currentIndex < mainSections.length - 1) {
@@ -340,7 +229,7 @@ function handleSwipe() {
     
     if (Math.abs(diff) > swipeThreshold) {
         const currentMainSection = document.querySelector('.main-section.active')?.id;
-        const mainSections = ['resume', 'books', 'gear'];
+        const mainSections = ['about', 'books', 'gear'];
         const currentIndex = mainSections.indexOf(currentMainSection);
         
         if (diff > 0 && currentIndex < mainSections.length - 1) {
