@@ -781,6 +781,15 @@ body {
 .content-intro {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.content-grid {
+    display: grid;
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .content-philosophy {
@@ -847,24 +856,10 @@ body {
     color: var(--color-primary);
 }
 
-.content-grid {
-    display: grid;
-    gap: 3rem;
-}
-
-.content-category {
-    background: var(--color-bg-light);
-    border-radius: var(--radius-lg);
-    padding: 2rem;
-    margin: 0 1rem;
-    border-left: 4px solid var(--color-primary);
-    box-shadow: var(--shadow-md);
-}
-
 .content-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 2rem;
     margin-top: 1.5rem;
 }
 
@@ -966,9 +961,11 @@ body {
 }
 
 /* Legacy class mappings for backwards compatibility */
-.books-intro {
+.books-intro,
+.gear-intro {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .books-cta {
@@ -995,13 +992,16 @@ body {
 .gear-grid {
     display: grid;
     gap: 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .book-category,
 .gear-category {
     background: var(--color-bg-light);
     border-radius: var(--radius-lg);
-    padding: 2rem;
+    padding: 2.5rem;
     border-left: 4px solid var(--color-primary);
     box-shadow: var(--shadow-md);
 }
@@ -1009,8 +1009,8 @@ body {
 .book-list,
 .gear-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 2rem;
     margin-top: 1.5rem;
 }
 
@@ -1163,12 +1163,12 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 700px) {
+@media (max-width: 1200px) {
     .content-list,
     .book-list,
     .gear-list {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 1rem;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1.5rem;
     }
     
     .main-content {
@@ -1176,11 +1176,28 @@ body {
     }
 }
 
+@media (max-width: 700px) {
+    .content-grid,
+    .books-grid,
+    .gear-grid,
+    .content-intro,
+    .books-intro,
+    .gear-intro {
+        padding: 0 1rem;
+    }
+    
+    .content-category,
+    .book-category,
+    .gear-category {
+        padding: 1.5rem;
+    }
+}
+
 @media (max-width: 500px) {
     .content-list,
     .book-list,
     .gear-list {
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: 1fr !important;
         gap: 1rem;
     }
     
