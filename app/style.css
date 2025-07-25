@@ -1009,7 +1009,7 @@ body {
 .book-list,
 .gear-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-columns: repeat(3, 1fr) !important;
     gap: 1rem;
     margin-top: 1.5rem;
 }

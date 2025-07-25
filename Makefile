@@ -63,7 +63,9 @@ push:
 	else \
 		git commit -m "$$msg"; \
 	fi
-	@git push origin main
+	@CURRENT_BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	echo "📤 Pushing to branch: $$CURRENT_BRANCH"; \
+	git push origin "$$CURRENT_BRANCH"
 	@echo "✅ Deployment started! Check status at: https://github.com/DineshGuduru/dinesh-live/actions"
 
 ## Status - Check container status
