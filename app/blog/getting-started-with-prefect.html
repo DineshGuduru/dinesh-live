@@ -1,11 +1,23 @@
-<hr />
-<p>title: Getting Started with Prefect - A Complete Guide to Task Orchestration
-date: 2024-03-22
-tags: [technical, data-engineering, prefect, python, orchestration]
-description: A comprehensive guide to getting started with Prefect for task orchestration, including setup, flows, tasks, deployments, and cloud integration</p>
-<hr />
-<h1>Getting Started with Prefect: Task Orchestration Made Simple</h1>
+            <!-- Blog Content Section -->
+            <div id="blog-content" class="main-section">
+                <div class="blog-post-container">
+                    <div class="blog-post-header">
+                        <h1 class="blog-post-title">Getting Started with Prefect - A Complete Guide to Task Orchestration</h1>
+                        <div class="blog-post-meta">
+                            <span class="blog-post-date">
+                                <i class="far fa-calendar-alt"></i>
+                                March 22, 2024
+                            </span>
+                            <span class="blog-post-reading-time">
+                                <i class="far fa-clock"></i>
+                                4 min read
+                            </span>
+                        </div>
+                    </div>
+                    <div class="blog-post-content">
+                        <h1>Getting Started with Prefect: Task Orchestration Made Simple</h1>
 <p>Data engineering teams often face significant challenges when coordinating various tools in their data infrastructure. Task orchestration tools like Prefect are designed to address these challenges and streamline data pipeline management. In this comprehensive guide, I'll walk you through Prefect, an open-source task orchestration solution built for modern data and ML engineers.</p>
+<p><img alt="Prefect Workflow Overview" src="images/blog/prefect-workflow.webp" /></p>
 <h2>What is Prefect?</h2>
 <p>Prefect is a powerful open-source task orchestration platform that enables developers to:
 - Build, observe, and react to data pipelines
@@ -21,62 +33,62 @@ description: A comprehensive guide to getting started with Prefect for task orch
 </ul>
 <h3>Setting Up Your Environment</h3>
 <ol>
-<li>
-<p>Create a new project and virtual environment:
-<code>bash
-python3 -m venv prefect-venv
-source prefect-venv/bin/activate</code></p>
-</li>
-<li>
-<p>Install Prefect:
-<code>bash
-pip install prefect</code></p>
-</li>
-<li>
-<p>Verify installation:
-<code>bash
-prefect version</code></p>
-</li>
-<li>
-<p>Start the Prefect server locally:
-<code>bash
-prefect server start</code></p>
-</li>
+<li>Create a new project and virtual environment:</li>
 </ol>
+<pre><code class="language-bash">python3 -m venv prefect-venv
+source prefect-venv/bin/activate
+</code></pre>
+<ol>
+<li>Install Prefect:</li>
+</ol>
+<pre><code class="language-bash">pip install prefect
+</code></pre>
+<ol>
+<li>Verify installation:</li>
+</ol>
+<pre><code class="language-bash">prefect version
+</code></pre>
+<ol>
+<li>Start the Prefect server locally:</li>
+</ol>
+<pre><code class="language-bash">prefect server start
+</code></pre>
 <h2>Core Concepts</h2>
 <h3>1. Flows</h3>
 <p>Flows are the basic building blocks in Prefect. Here's a simple example:</p>
-<p>```python
-from prefect import flow</p>
-<p>@flow
+<pre><code class="language-python">from prefect import flow
+
+@flow
 def hello_world():
-    print("Hello World!")</p>
-<p>if <strong>name</strong> == "<strong>main</strong>":
+    print(&quot;Hello World!&quot;)
+
+if __name__ == &quot;__main__&quot;:
     hello_world()
-```</p>
+</code></pre>
 <h3>2. Tasks</h3>
 <p>Tasks are individual units of work within a flow:</p>
-<p>```python
-from prefect import flow, task</p>
-<p>@task
+<pre><code class="language-python">from prefect import flow, task
+
+@task
 def get_message():
-    return "Hello from Prefect!"</p>
-<p>@flow
+    return &quot;Hello from Prefect!&quot;
+
+@flow
 def hello_world():
     message = get_message()
     print(message)
-```</p>
+</code></pre>
 <h3>3. SubFlows</h3>
 <p>You can create hierarchical workflows using subflows:</p>
-<p>```python
-@flow
+<pre><code class="language-python">@flow
 def subflow():
-    return "Message from subflow"</p>
-<p>@flow
+    return &quot;Message from subflow&quot;
+
+@flow
 def main_flow():
     result = subflow()
     print(result)
-```</p>
+</code></pre>
 <h2>Deployments</h2>
 <p>Deployments are a crucial feature that enables you to:
 - Trigger new runs
@@ -87,21 +99,19 @@ def main_flow():
 - Provision infrastructure dynamically</p>
 <h3>Creating a Deployment</h3>
 <ol>
-<li>
-<p>Build the deployment:
-<code>bash
-prefect deployment build hello_world.py:hello_world -n demo-deployment</code></p>
-</li>
-<li>
-<p>Apply the deployment:
-<code>bash
-prefect deployment apply hello_world-deployment.yaml</code></p>
-</li>
+<li>Build the deployment:</li>
 </ol>
+<pre><code class="language-bash">prefect deployment build hello_world.py:hello_world -n demo-deployment
+</code></pre>
+<ol>
+<li>Apply the deployment:</li>
+</ol>
+<pre><code class="language-bash">prefect deployment apply hello_world-deployment.yaml
+</code></pre>
 <h3>Starting an Agent</h3>
-<p>To execute deployments, start a Prefect agent:
-<code>bash
-prefect agent start -q 'default'</code></p>
+<p>To execute deployments, start a Prefect agent:</p>
+<pre><code class="language-bash">prefect agent start -q 'default'
+</code></pre>
 <h2>Prefect Cloud</h2>
 <p>While local development is great for getting started, Prefect Cloud offers several advantages:
 - No need to host your own server
@@ -113,31 +123,31 @@ prefect agent start -q 'default'</code></p>
 <ol>
 <li>Sign up at prefect.io</li>
 <li>Create a workspace</li>
-<li>Connect your local environment:
-<code>bash
-prefect cloud login</code></li>
+<li>Connect your local environment:</li>
 </ol>
+<pre><code class="language-bash">prefect cloud login
+</code></pre>
 <h2>Working with Blocks</h2>
 <p>Blocks provide secure storage for:
 - Credentials
 - Configurations
 - Integration settings</p>
 <h3>Example: Using a String Block</h3>
-<p>```python
-from prefect.blocks.system import String</p>
-<p>block = String.load("whoami")
+<pre><code class="language-python">from prefect.blocks.system import String
+
+block = String.load(&quot;whoami&quot;)
 message = block.value
-print(f"Message from block: {message}")
-```</p>
+print(f&quot;Message from block: {message}&quot;)
+</code></pre>
 <h2>Version Control and GitHub Integration</h2>
 <p>Prefect integrates seamlessly with GitHub for version control:</p>
 <ol>
 <li>Create a GitHub block in Prefect UI</li>
 <li>Configure with repository URL and access token</li>
-<li>Update deployment to use GitHub storage:
-<code>bash
-prefect deployment build hello_world.py:hello_world -n "demo-github-deployment" -sb github/prefect-repo</code></li>
+<li>Update deployment to use GitHub storage:</li>
 </ol>
+<pre><code class="language-bash">prefect deployment build hello_world.py:hello_world -n &quot;demo-github-deployment&quot; -sb github/prefect-repo
+</code></pre>
 <h2>Best Practices</h2>
 <ol>
 <li><strong>Organization</strong>:</li>
@@ -166,3 +176,17 @@ prefect deployment build hello_world.py:hello_world -n "demo-github-deployment" 
 <p>For more examples and detailed documentation, check out the <a href="https://docs.prefect.io/">official Prefect documentation</a>.</p>
 <hr />
 <p><em>Note: The code examples in this post are simplified for demonstration purposes. In production environments, you'll want to add proper error handling and logging.</em> </p>
+                    </div>
+                    <div class="blog-post-footer">
+                        <div class="blog-post-tags">
+                            <span class="tag">technical</span><span class="tag">data-engineering</span><span class="tag">prefect</span><span class="tag">python</span><span class="tag">orchestration</span>
+                        </div>
+                        <div class="blog-post-navigation">
+                            <a href="#blog" class="back-to-blog">
+                                <i class="fas fa-arrow-left"></i>
+                                Back to Blog
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div> 

@@ -1,20 +1,16 @@
-                    <div class="blog-item">
-                        <div class="blog-image-container">
-                            <img src="{image_path}" alt="{title}" class="blog-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="blog-cover-fallback" style="display: none; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
-                                <i class="fas fa-pen-fancy" style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.9;"></i>
-                                <div style="font-size: 0.8rem; opacity: 0.9; font-weight: 500;">{date}</div>
-                            </div>
+                <div class="blog-item">
+                    <div class="blog-image-container">
+                        {image_html}
+                    </div>
+                    <div class="blog-info">
+                        <h3 class="blog-title">{title}</h3>
+                        <p class="blog-date">{date}</p>
+                        <p class="blog-description">{description}</p>
+                        <div class="blog-actions">
+                            <a href="{read_more_link}" class="read-more-button">
+                                <i class="fas fa-book-reader"></i>
+                                Read More
+                            </a>
                         </div>
-                        <div class="blog-info">
-                            <h3 class="blog-title">{title}</h3>
-                            <p class="blog-date">{date}</p>
-                            <p class="blog-description">{description}</p>
-                            <div class="blog-actions">
-                                <a href="{read_more_link}" class="read-more-button">
-                                    <i class="fas fa-book-reader"></i>
-                                    Read More
-                                </a>
-                            </div>
-                        </div>
-                    </div> 
+                    </div>
+                </div> 

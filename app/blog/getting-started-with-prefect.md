@@ -3,11 +3,14 @@ title: Getting Started with Prefect - A Complete Guide to Task Orchestration
 date: 2024-03-22
 tags: [technical, data-engineering, prefect, python, orchestration]
 description: A comprehensive guide to getting started with Prefect for task orchestration, including setup, flows, tasks, deployments, and cloud integration
+image_path: images/blog/prefect-workflow.webp
 ---
 
 # Getting Started with Prefect: Task Orchestration Made Simple
 
 Data engineering teams often face significant challenges when coordinating various tools in their data infrastructure. Task orchestration tools like Prefect are designed to address these challenges and streamline data pipeline management. In this comprehensive guide, I'll walk you through Prefect, an open-source task orchestration solution built for modern data and ML engineers.
+
+![Prefect Workflow Overview](images/blog/prefect-workflow.webp)
 
 ## What is Prefect?
 

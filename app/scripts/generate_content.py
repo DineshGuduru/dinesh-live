@@ -15,6 +15,7 @@ import re
 from pathlib import Path
 import markdown
 from datetime import datetime
+import math
 
 def load_template(template_name):
     """Load a template file from the templates directory"""
@@ -28,42 +29,98 @@ def load_config():
     with open(config_path, 'r', encoding='utf-8') as file:
         return yaml.safe_load(file)
 
+def estimate_reading_time(content):
+    """Estimate reading time in minutes based on word count"""
+    words = len(content.split())
+    reading_time = math.ceil(words / 200)  # Assuming 200 words per minute
+    return max(1, reading_time)  # Minimum 1 minute
+
 def load_blog_post(post_path):
     """Load and parse a blog post markdown file"""
     with open(post_path, 'r', encoding='utf-8') as file:
         content = file.read()
         
-    # Parse front matter if exists (you can add this later)
-    # For now, we'll use the filename and modification time
-    post_name = post_path.stem.replace('-', ' ').title()
-    post_date = datetime.fromtimestamp(post_path.stat().st_mtime)
+    # Split content into frontmatter and body
+    parts = content.split('---', 2)
+    if len(parts) >= 3:
+        frontmatter = yaml.safe_load(parts[1])
+        body = parts[2]
+    else:
+        frontmatter = {}
+        body = content
+    
+    # Get post metadata from frontmatter or defaults
+    post_name = frontmatter.get('title') or post_path.stem.replace('-', ' ').title()
+    
+    # Handle date from frontmatter or file modification time
+    if 'date' in frontmatter:
+        if isinstance(frontmatter['date'], datetime):
+            post_date = frontmatter['date'].strftime('%B %d, %Y')
+        elif isinstance(frontmatter['date'], str):
+            try:
+                post_date = datetime.strptime(frontmatter['date'], '%Y-%m-%d').strftime('%B %d, %Y')
+            except ValueError:
+                post_date = frontmatter['date']
+        else:
+            post_date = frontmatter['date'].strftime('%B %d, %Y')
+    else:
+        post_date = datetime.fromtimestamp(post_path.stat().st_mtime).strftime('%B %d, %Y')
     
     # Convert markdown to HTML
-    html_content = markdown.markdown(content)
+    html_content = markdown.markdown(body, extensions=['fenced_code', 'tables'])
+    reading_time = estimate_reading_time(body)
+    
+    # Generate tags HTML if available
+    tags = frontmatter.get('tags', [])
+    tags_html = ''
+    if tags:
+        tags_html = ''.join([f'<span class="tag">{tag}</span>' for tag in tags])
+    
+    # Generate the blog post HTML using the template
+    blog_content_template = load_template('blog_content')
+    post_html = blog_content_template.format(
+        title=post_name,
+        date=post_date,
+        reading_time=reading_time,
+        content=html_content,
+        tags_html=tags_html
+    )
     
     # Save the HTML version
     html_path = post_path.with_suffix('.html')
     with open(html_path, 'w', encoding='utf-8') as file:
-        file.write(html_content)
+        file.write(post_html)
     
     return {
         'title': post_name,
-        'date': post_date.strftime('%B %d, %Y'),
-        'description': content.split('\n\n')[1][:200] + '...',  # First paragraph as description
+        'date': post_date,
+        'description': frontmatter.get('description') or body.split('\n\n')[1][:200] + '...',
         'html_path': html_path.relative_to(Path(__file__).parent.parent),
-        'image_path': 'images/blog/default-blog-image.jpg'  # You can customize this later
+        'image_path': frontmatter.get('image_path'),  # Remove default fallback
+        'reading_time': reading_time
     }
 
 def generate_blog_post_html(post):
-    """Generate HTML for a single blog post"""
-    template = load_template('blog_post')
+    """Generate HTML for a single blog post preview"""
+    blog_post_template = load_template('blog_post')
     
-    return template.format(
-        image_path=post['image_path'],
+    # Generate image HTML based on whether an image is provided
+    if post.get('image_path'):
+        image_html = f'<img src="{post["image_path"]}" alt="{post["title"]}" class="blog-image">'
+    else:
+        image_html = '''
+            <div class="blog-cover-fallback" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+                <i class="fas fa-pen-fancy" style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.9;"></i>
+                <div style="font-size: 0.8rem; opacity: 0.9; font-weight: 500;">{date}</div>
+            </div>
+        '''.format(date=post['date'])
+    
+    return blog_post_template.format(
         title=post['title'],
         date=post['date'],
         description=post['description'],
-        read_more_link=str(post['html_path'])
+        image_html=image_html,
+        read_more_link=post['html_path']
     )
 
 def generate_blog_section_html(config):

@@ -14,6 +14,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application files
 COPY app/ .
 
+# Create blog images directory
+RUN mkdir -p images/blog
+
 # Generate the complete index.html from templates
 RUN python scripts/generate_content.py
 
@@ -31,6 +34,11 @@ COPY --from=generator /app/ .
 
 # Copy custom nginx configuration
 COPY docker/nginx.conf /etc/nginx/nginx.conf
+
+# Create necessary directories and set permissions
+RUN mkdir -p /var/log/nginx \
+    && chown -R nginx:nginx /var/log/nginx \
+    && chown -R nginx:nginx /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
