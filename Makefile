@@ -6,8 +6,8 @@
 # Default target
 .DEFAULT_GOAL := help
 
-# Docker commands
-DOCKER_COMPOSE := docker compose
+# Docker settings
+DOCKER_COMPOSE := $(shell if command -v docker-compose >/dev/null 2>&1; then echo "docker-compose"; else echo "docker compose"; fi)
 DOCKER_COMPOSE_FILE := docker/docker-compose.yml
 PORT := 8080
 
@@ -50,8 +50,8 @@ stop:
 ## Clean - Clean up all Docker resources
 clean:
 	@echo "🧹 Cleaning up Docker resources..."
-	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) down --rmi all --volumes --remove-orphans || true
-	@docker builder prune -f || true
+	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) down --rmi all --volumes --remove-orphans 2>/dev/null || true
+	@docker system prune -f
 	@echo "✅ Cleanup completed!"
 
 ## Push - Commit changes and push to GitHub (triggers deployment)
@@ -92,23 +92,3 @@ check:
 	@echo "🔍 Checking config.yml syntax..."
 	@command -v python3 >/dev/null 2>&1 || { echo "❌ Python3 not found. Skipping YAML validation."; exit 0; }
 	@cd app && python3 -c "import yaml; yaml.safe_load(open('config.yml'))" 2>/dev/null && echo "✅ YAML syntax is valid!" || echo "❌ YAML validation failed or PyYAML not installed"
-
-blog:
-	@read -p "Enter blog post title: " title; \
-	filename=$$(echo "$$title" | tr '[:upper:]' '[:lower:]' | tr ' ' '-'); \
-	filepath="app/blog/$$filename.md"; \
-	if [ -f "$$filepath" ]; then \
-		echo "❌ Blog post already exists!"; \
-	else \
-		echo "---" > "$$filepath"; \
-		echo "title: $$title" >> "$$filepath"; \
-		echo "date: $$(date '+%Y-%m-%d')" >> "$$filepath"; \
-		echo "tags: []" >> "$$filepath"; \
-		echo "description: " >> "$$filepath"; \
-		echo "---" >> "$$filepath"; \
-		echo "" >> "$$filepath"; \
-		echo "# $$title" >> "$$filepath"; \
-		echo "" >> "$$filepath"; \
-		echo "✅ Created new blog post: $$filepath"; \
-		echo "📝 Edit the blog post and run 'make dev' to see the changes."; \
-	fi

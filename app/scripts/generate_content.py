@@ -13,9 +13,6 @@ Usage:
 import yaml
 import re
 from pathlib import Path
-import markdown
-from datetime import datetime
-import math
 
 def load_template(template_name):
     """Load a template file from the templates directory"""
@@ -28,154 +25,6 @@ def load_config():
     config_path = Path(__file__).parent.parent / 'config.yml'
     with open(config_path, 'r', encoding='utf-8') as file:
         return yaml.safe_load(file)
-
-def estimate_reading_time(content):
-    """Estimate reading time in minutes based on word count"""
-    words = len(content.split())
-    reading_time = math.ceil(words / 200)  # Assuming 200 words per minute
-    return max(1, reading_time)  # Minimum 1 minute
-
-def generate_tag_html(tag):
-    """Generate HTML for a single tag with icon based on tag type"""
-    icon_map = {
-        'technical': 'fas fa-code',
-        'data-engineering': 'fas fa-database',
-        'python': 'fab fa-python',
-        'orchestration': 'fas fa-cogs',
-        'prefect': 'fas fa-stream',
-        'tutorial': 'fas fa-graduation-cap',
-        'guide': 'fas fa-book',
-        'best-practices': 'fas fa-check-circle',
-        'career': 'fas fa-briefcase',
-        'development': 'fas fa-laptop-code',
-        'cloud': 'fas fa-cloud',
-        'architecture': 'fas fa-sitemap',
-        'devops': 'fas fa-tools',
-        'security': 'fas fa-shield-alt',
-        'performance': 'fas fa-tachometer-alt',
-        'testing': 'fas fa-vial',
-        'deployment': 'fas fa-rocket',
-        'monitoring': 'fas fa-chart-line',
-        'automation': 'fas fa-robot',
-        'infrastructure': 'fas fa-server',
-    }
-    
-    # Get icon or default to tag icon
-    icon = icon_map.get(tag.lower(), 'fas fa-tag')
-    return f'<span class="tag"><i class="{icon}"></i> {tag}</span>'
-
-def load_blog_post(post_path):
-    """Load and parse a blog post markdown file"""
-    with open(post_path, 'r', encoding='utf-8') as file:
-        content = file.read()
-        
-    # Split content into frontmatter and body
-    parts = content.split('---', 2)
-    if len(parts) >= 3:
-        frontmatter = yaml.safe_load(parts[1])
-        body = parts[2]
-    else:
-        frontmatter = {}
-        body = content
-    
-    # Get post metadata from frontmatter or defaults
-    post_name = frontmatter.get('title') or post_path.stem.replace('-', ' ').title()
-    
-    # Handle date from frontmatter or file modification time
-    if 'date' in frontmatter:
-        if isinstance(frontmatter['date'], datetime):
-            post_date = frontmatter['date'].strftime('%B %d, %Y')
-        elif isinstance(frontmatter['date'], str):
-            try:
-                post_date = datetime.strptime(frontmatter['date'], '%Y-%m-%d').strftime('%B %d, %Y')
-            except ValueError:
-                post_date = frontmatter['date']
-        else:
-            post_date = frontmatter['date'].strftime('%B %d, %Y')
-    else:
-        post_date = datetime.fromtimestamp(post_path.stat().st_mtime).strftime('%B %d, %Y')
-    
-    # Convert markdown to HTML with extensions
-    html_content = markdown.markdown(body, extensions=['fenced_code', 'tables', 'codehilite'])
-    reading_time = estimate_reading_time(body)
-    
-    # Generate tags HTML with icons
-    tags = frontmatter.get('tags', [])
-    tags_html = ''.join(generate_tag_html(tag) for tag in tags) if tags else ''
-    
-    # Generate the blog post HTML using the template
-    blog_content_template = load_template('blog_content')
-    post_html = blog_content_template.format(
-        title=post_name,
-        date=post_date,
-        reading_time=reading_time,
-        content=html_content,
-        tags_html=tags_html
-    )
-    
-    # Save the HTML version
-    html_path = post_path.with_suffix('.html')
-    with open(html_path, 'w', encoding='utf-8') as file:
-        file.write(post_html)
-    
-    return {
-        'title': post_name,
-        'date': post_date,
-        'description': frontmatter.get('description') or body.split('\n\n')[1][:200] + '...',
-        'html_path': html_path.relative_to(Path(__file__).parent.parent),
-        'image_path': frontmatter.get('image_path'),
-        'reading_time': reading_time
-    }
-
-def generate_blog_post_html(post):
-    """Generate HTML for a single blog post preview"""
-    blog_post_template = load_template('blog_post')
-    
-    # Generate image HTML based on whether an image is provided
-    if post.get('image_path'):
-        image_html = f'<img src="{post["image_path"]}" alt="{post["title"]}" class="blog-image">'
-    else:
-        image_html = '''
-            <div class="blog-cover-fallback" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
-                <i class="fas fa-pen-fancy" style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.9;"></i>
-                <div style="font-size: 0.8rem; opacity: 0.9; font-weight: 500;">{date}</div>
-            </div>
-        '''.format(date=post['date'])
-    
-    return blog_post_template.format(
-        title=post['title'],
-        date=post['date'],
-        description=post['description'],
-        image_html=image_html,
-        read_more_link=post['html_path']
-    )
-
-def generate_blog_section_html(config):
-    """Generate the complete blog section HTML"""
-    site_config = config.get('site', {})
-    blog_config = config.get('blog', {})
-    template = load_template('blog_list')
-    
-    # Get all markdown files in the blog directory
-    blog_dir = Path(__file__).parent.parent / 'blog'
-    blog_posts = []
-    
-    if blog_dir.exists():
-        for post_file in blog_dir.glob('*.md'):
-            blog_posts.append(load_blog_post(post_file))
-    
-    # Sort posts by date (newest first)
-    blog_posts.sort(key=lambda x: datetime.strptime(x['date'], '%B %d, %Y'), reverse=True)
-    
-    # Generate blog posts content
-    blog_posts_content = ""
-    for post in blog_posts:
-        blog_posts_content += '\n' + generate_blog_post_html(post)
-    
-    return template.format(
-        blog_intro=site_config.get('blog_intro', 'Welcome to my blog where I share insights about technology, engineering, and personal growth.'),
-        blog_posts_content=blog_posts_content
-    )
 
 def generate_book_html(book):
     """Generate HTML for a single book"""
@@ -352,7 +201,6 @@ def generate_complete_html(config):
     about_template = load_template('about')
     
     # Generate dynamic sections
-    blog_html = generate_blog_section_html(config)
     books_html = generate_books_section_html(config)
     gear_html = generate_gear_section_html(config)
     
@@ -360,7 +208,6 @@ def generate_complete_html(config):
     complete_html = base_template.format(
         header_content=header_template,
         about_content=about_template,
-        blog_content=blog_html,
         books_content=books_html,
         gear_content=gear_html
     )

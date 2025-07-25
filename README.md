@@ -5,7 +5,6 @@ A modern, responsive, and interactive static website built with a dynamic templa
 ## 🌟 Features
 
 - **Dynamic Content System**: Complete website generated from YAML config and HTML templates
-- **Blog System**: Markdown-based blog with automatic HTML conversion
 - **Docker-Powered**: Full development and deployment workflow in Docker containers
 - **Modern Design**: Clean, professional layout with beautiful gradients and animations
 - **Interactive Navigation**: Smooth transitions between sections with keyboard and touch support
@@ -178,63 +177,6 @@ gear:
   products:
     - # ... product details
 ```
-
-## 📝 Blog System
-
-The website includes a powerful blog system that converts Markdown files to HTML and integrates them seamlessly into the site.
-
-### Creating Blog Posts
-
-```bash
-# Create a new blog post
-make blog
-
-# Enter the blog post title when prompted
-# This will create a new .md file in app/blog/
-```
-
-### Blog Post Structure
-
-```markdown
----
-title: Your Blog Post Title
-date: 2024-03-22
-tags: [tag1, tag2, tag3]
-description: A brief description of your blog post
----
-
-# Your Blog Post Title
-
-Your blog post content here in Markdown format...
-```
-
-### Blog Features
-
-- **Markdown Support**: Write posts in Markdown for easy formatting
-- **Automatic Conversion**: Posts are automatically converted to HTML
-- **Reading Time**: Automatically calculated based on content length
-- **Responsive Design**: Beautiful layout on all devices
-- **Code Highlighting**: Syntax highlighting for code blocks
-- **Image Support**: Full support for blog post images
-- **Tags**: Categorize posts with tags
-- **Navigation**: Easy navigation between posts and blog list
-
-### Blog Post Images
-
-Place blog post images in `app/images/blog/` directory:
-```
-app/images/blog/
-├── post-1-image.jpg
-├── post-2-image.jpg
-└── default-blog-image.jpg
-```
-
-### Customizing Blog Layout
-
-1. **Blog List**: Edit `app/templates/blog_list.html`
-2. **Blog Post**: Edit `app/templates/blog_post.html`
-3. **Blog Styles**: Customize in `app/style.css`
-4. **Blog Behavior**: Update in `app/script.js`
 
 ## 🛠️ Technologies Used
 
