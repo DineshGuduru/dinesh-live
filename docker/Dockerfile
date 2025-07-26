@@ -36,8 +36,20 @@ COPY --from=generator /app/ .
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/log/nginx \
+    && mkdir -p /var/cache/nginx \
+    && mkdir -p /var/cache/nginx/client_temp \
+    && mkdir -p /var/cache/nginx/proxy_temp \
+    && mkdir -p /var/cache/nginx/fastcgi_temp \
+    && mkdir -p /var/cache/nginx/uwsgi_temp \
+    && mkdir -p /var/cache/nginx/scgi_temp \
     && chown -R nginx:nginx /var/log/nginx \
-    && chown -R nginx:nginx /usr/share/nginx/html
+    && chown -R nginx:nginx /var/cache/nginx \
+    && chown -R nginx:nginx /usr/share/nginx/html \
+    && chmod -R 755 /var/cache/nginx \
+    && chmod -R 755 /var/log/nginx \
+    && chmod -R 755 /usr/share/nginx/html \
+    && touch /var/run/nginx.pid \
+    && chown -R nginx:nginx /var/run/nginx.pid
 
 # Switch to non-root user
 USER nginx
