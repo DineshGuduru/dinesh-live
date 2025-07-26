@@ -117,7 +117,7 @@ def load_blog_post(post_path):
     )
     
     # Save the HTML version in the blog directory
-    html_path = post_path.parent / f'{post_path.stem}.html'
+    html_path = post_path.with_suffix('.html')
     with open(html_path, 'w', encoding='utf-8') as file:
         file.write(post_html)
     
