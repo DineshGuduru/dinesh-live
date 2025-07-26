@@ -6,8 +6,6 @@ description: A comprehensive guide to getting started with Prefect for task orch
 image_path: images/blog/prefect-workflow.webp
 ---
 
-# Getting Started with Prefect: Task Orchestration Made Simple
-
 Data engineering teams often face significant challenges when coordinating various tools in their data infrastructure. Task orchestration tools like Prefect are designed to address these challenges and streamline data pipeline management. In this comprehensive guide, I'll walk you through Prefect, an open-source task orchestration solution built for modern data and ML engineers.
 
 ![Prefect Workflow Overview](images/blog/prefect-workflow.webp)
@@ -178,17 +176,17 @@ prefect deployment build hello_world.py:hello_world -n "demo-github-deployment" 
 
 ## Best Practices
 
-1. **Organization**:
+### Organization:
    - Use meaningful names for flows and tasks
    - Group related tasks into subflows
    - Leverage tags for better organization
 
-2. **Security**:
+### Security:
    - Use blocks for sensitive information
    - Never hardcode credentials
    - Implement proper access controls in cloud deployments
 
-3. **Monitoring**:
+### Monitoring:
    - Set up notifications for task failures
    - Configure appropriate logging levels
    - Use tags for filtering and monitoring

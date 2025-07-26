@@ -10,7 +10,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application files
+# Copy entire app directory
 COPY app/ .
 
 # Create necessary directories
@@ -31,8 +31,10 @@ WORKDIR /usr/share/nginx/html
 # Remove default nginx static assets
 RUN rm -rf ./*
 
-# Copy generated files from builder
+# Copy all static files and generated content from builder
 COPY --from=generator /app/ .
+COPY app/images/ ./images/
+COPY app/blog/ ./blog/
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/log/nginx \

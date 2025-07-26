@@ -1,5 +1,18 @@
-            <!-- Blog Content Section -->
-            <div id="blog-content" class="main-section">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title} - Dineshvarma Guduru</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨‍💻</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <main>
+            <div id="blog-content" class="main-section active">
                 <div class="blog-post-container">
                     <div class="blog-post-header">
                         <div class="blog-post-meta">
@@ -13,20 +26,29 @@
                             </span>
                         </div>
                         <h1 class="blog-post-title">{title}</h1>
-                        <div class="blog-post-tags">
-                            {tags_html}
-                        </div>
                     </div>
                     <div class="blog-post-content">
                         {content}
                     </div>
                     <div class="blog-post-footer">
+                        <div class="blog-post-tags">
+                            <h3>Tags</h3>
+                            <div class="tags-container">
+                                {tags_html}
+                            </div>
+                        </div>
                         <div class="blog-post-navigation">
-                            <a href="#blog" class="back-to-blog">
+                            <a href="/" class="back-to-blog">
                                 <i class="fas fa-arrow-left"></i>
                                 Back to Blog
                             </a>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
+        </main>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html> 

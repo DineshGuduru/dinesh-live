@@ -373,11 +373,11 @@ document.addEventListener('click', (event) => {
     }
     
     // Handle blog post links
-    if (event.target.closest('.read-more-button')) {
+    const link = event.target.closest('.read-more-button');
+    if (link) {
         event.preventDefault();
-        const link = event.target.closest('.read-more-button');
         const href = link.getAttribute('href');
-        loadBlogPost(href);
+        window.location.href = href;
     }
     
     // Handle back to blog link

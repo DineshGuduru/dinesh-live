@@ -95,6 +95,9 @@ def load_blog_post(post_path):
     else:
         post_date = datetime.fromtimestamp(post_path.stat().st_mtime).strftime('%B %d, %Y')
     
+    # Fix image paths in the markdown content to be relative to the root
+    body = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', lambda m: f'![{m.group(1)}](/{m.group(2)})', body)
+    
     # Convert markdown to HTML with extensions
     html_content = markdown.markdown(body, extensions=['fenced_code', 'tables', 'codehilite'])
     reading_time = estimate_reading_time(body)
@@ -113,17 +116,22 @@ def load_blog_post(post_path):
         tags_html=tags_html
     )
     
-    # Save the HTML version
-    html_path = post_path.with_suffix('.html')
+    # Save the HTML version in the blog directory
+    html_path = post_path.parent / f'{post_path.stem}.html'
     with open(html_path, 'w', encoding='utf-8') as file:
         file.write(post_html)
+    
+    # Fix image path to be relative to root
+    image_path = frontmatter.get('image_path')
+    if image_path:
+        image_path = f'/{image_path}' if not image_path.startswith('/') else image_path
     
     return {
         'title': post_name,
         'date': post_date,
         'description': frontmatter.get('description') or body.split('\n\n')[1][:200] + '...',
-        'html_path': html_path.relative_to(Path(__file__).parent.parent),
-        'image_path': frontmatter.get('image_path'),
+        'html_path': f'blog/{post_path.stem}.html',
+        'image_path': image_path,
         'reading_time': reading_time
     }
 
