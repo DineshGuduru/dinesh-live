@@ -110,9 +110,9 @@ def load_blog_post(post_path):
             # Use relative image path for GitHub Pages subdirectory
             image_path = image_path.lstrip('/')  # Remove leading slash if present
         
-        # Fix image paths in the markdown content to be relative
+        # Fix image paths in the markdown content for blog subdirectory
         body = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', 
-                     lambda m: f'![{m.group(1)}]({m.group(2).lstrip("/")})', 
+                     lambda m: f'![{m.group(1)}](../{m.group(2).lstrip("/")})', 
                      body)
         
         # Convert markdown to HTML with extensions
