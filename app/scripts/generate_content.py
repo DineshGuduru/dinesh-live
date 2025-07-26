@@ -130,7 +130,7 @@ def load_blog_post(post_path):
         'title': post_name,
         'date': post_date,
         'description': frontmatter.get('description') or body.split('\n\n')[1][:200] + '...',
-        'html_path': f'blog/{post_path.stem}.html',
+        'html_path': f'/blog/{post_path.stem}.html',  # Add leading slash for absolute path
         'image_path': image_path,
         'reading_time': reading_time
     }

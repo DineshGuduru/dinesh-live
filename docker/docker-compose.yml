@@ -17,6 +17,7 @@ services:
       - ../app/images:/usr/share/nginx/html/images:ro
       - ../app/style.css:/usr/share/nginx/html/style.css:ro
       - ../app/script.js:/usr/share/nginx/html/script.js:ro
+      - ../app/templates:/usr/share/nginx/html/templates:ro
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
       interval: 30s
