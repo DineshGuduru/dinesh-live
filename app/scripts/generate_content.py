@@ -107,12 +107,12 @@ def load_blog_post(post_path):
             image_full_path = Path(__file__).parent.parent / image_path
             if not image_full_path.exists():
                 raise ValueError(f"Image not found: {image_path} in {post_path}")
-            # Ensure image path starts with /
-            image_path = f'/{image_path}' if not image_path.startswith('/') else image_path
+            # Use relative image path for GitHub Pages subdirectory
+            image_path = image_path.lstrip('/')  # Remove leading slash if present
         
-        # Fix image paths in the markdown content to be relative to the root
+        # Fix image paths in the markdown content to be relative
         body = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', 
-                     lambda m: f'![{m.group(1)}](/{m.group(2).lstrip("/")})', 
+                     lambda m: f'![{m.group(1)}]({m.group(2).lstrip("/")})', 
                      body)
         
         # Convert markdown to HTML with extensions
@@ -147,7 +147,7 @@ def load_blog_post(post_path):
             'title': post_name,
             'date': post_date,
             'description': frontmatter.get('description') or body.split('\n\n')[1][:200] + '...',
-            'html_path': f'/blog/{post_path.stem}.html',  # Add leading slash for absolute path
+            'html_path': f'blog/{post_path.stem}.html',  # Use relative path for GitHub Pages subdirectory
             'image_path': image_path,
             'reading_time': reading_time
         }
