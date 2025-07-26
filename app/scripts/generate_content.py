@@ -117,7 +117,7 @@ def load_blog_post(post_path):
     )
     
     # Save the HTML version in the blog directory
-    html_path = post_path.parent / f'{post_path.stem}.html'
+    html_path = post_path.with_suffix('.html')
     with open(html_path, 'w', encoding='utf-8') as file:
         file.write(post_html)
     
@@ -130,7 +130,7 @@ def load_blog_post(post_path):
         'title': post_name,
         'date': post_date,
         'description': frontmatter.get('description') or body.split('\n\n')[1][:200] + '...',
-        'html_path': f'blog/{post_path.stem}.html',
+        'html_path': f'/blog/{post_path.stem}.html',  # Add leading slash for absolute path
         'image_path': image_path,
         'reading_time': reading_time
     }
