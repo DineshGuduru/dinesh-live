@@ -66,74 +66,94 @@ def generate_tag_html(tag):
 
 def load_blog_post(post_path):
     """Load and parse a blog post markdown file"""
-    with open(post_path, 'r', encoding='utf-8') as file:
-        content = file.read()
-        
-    # Split content into frontmatter and body
-    parts = content.split('---', 2)
-    if len(parts) >= 3:
-        frontmatter = yaml.safe_load(parts[1])
+    try:
+        with open(post_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+            
+        # Split content into frontmatter and body
+        parts = content.split('---', 2)
+        if len(parts) < 3:
+            raise ValueError(f"Invalid frontmatter format in {post_path}")
+            
+        try:
+            frontmatter = yaml.safe_load(parts[1])
+            if not isinstance(frontmatter, dict):
+                raise ValueError(f"Invalid YAML in frontmatter of {post_path}")
+        except yaml.YAMLError as e:
+            raise ValueError(f"Failed to parse YAML in {post_path}: {str(e)}")
+            
         body = parts[2]
-    else:
-        frontmatter = {}
-        body = content
-    
-    # Get post metadata from frontmatter or defaults
-    post_name = frontmatter.get('title') or post_path.stem.replace('-', ' ').title()
-    
-    # Handle date from frontmatter or file modification time
-    if 'date' in frontmatter:
-        if isinstance(frontmatter['date'], datetime):
-            post_date = frontmatter['date'].strftime('%B %d, %Y')
-        elif isinstance(frontmatter['date'], str):
-            try:
-                post_date = datetime.strptime(frontmatter['date'], '%Y-%m-%d').strftime('%B %d, %Y')
-            except ValueError:
-                post_date = frontmatter['date']
+        
+        # Get post metadata from frontmatter or defaults
+        post_name = frontmatter.get('title') or post_path.stem.replace('-', ' ').title()
+        
+        # Handle date from frontmatter or file modification time
+        if 'date' in frontmatter:
+            if isinstance(frontmatter['date'], datetime):
+                post_date = frontmatter['date'].strftime('%B %d, %Y')
+            elif isinstance(frontmatter['date'], str):
+                try:
+                    post_date = datetime.strptime(frontmatter['date'], '%Y-%m-%d').strftime('%B %d, %Y')
+                except ValueError:
+                    raise ValueError(f"Invalid date format in {post_path}. Expected YYYY-MM-DD")
+            else:
+                post_date = frontmatter['date'].strftime('%B %d, %Y')
         else:
-            post_date = frontmatter['date'].strftime('%B %d, %Y')
-    else:
-        post_date = datetime.fromtimestamp(post_path.stat().st_mtime).strftime('%B %d, %Y')
-    
-    # Fix image paths in the markdown content to be relative to the root
-    body = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', lambda m: f'![{m.group(1)}](/{m.group(2)})', body)
-    
-    # Convert markdown to HTML with extensions
-    html_content = markdown.markdown(body, extensions=['fenced_code', 'tables', 'codehilite'])
-    reading_time = estimate_reading_time(body)
-    
-    # Generate tags HTML with icons
-    tags = frontmatter.get('tags', [])
-    tags_html = ''.join(generate_tag_html(tag) for tag in tags) if tags else ''
-    
-    # Generate the blog post HTML using the template
-    blog_content_template = load_template('blog_content')
-    post_html = blog_content_template.format(
-        title=post_name,
-        date=post_date,
-        reading_time=reading_time,
-        content=html_content,
-        tags_html=tags_html
-    )
-    
-    # Save the HTML version in the blog directory
-    html_path = post_path.with_suffix('.html')
-    with open(html_path, 'w', encoding='utf-8') as file:
-        file.write(post_html)
-    
-    # Fix image path to be relative to root
-    image_path = frontmatter.get('image_path')
-    if image_path:
-        image_path = f'/{image_path}' if not image_path.startswith('/') else image_path
-    
-    return {
-        'title': post_name,
-        'date': post_date,
-        'description': frontmatter.get('description') or body.split('\n\n')[1][:200] + '...',
-        'html_path': f'/blog/{post_path.stem}.html',  # Add leading slash for absolute path
-        'image_path': image_path,
-        'reading_time': reading_time
-    }
+            post_date = datetime.fromtimestamp(post_path.stat().st_mtime).strftime('%B %d, %Y')
+        
+        # Validate and fix image paths
+        image_path = frontmatter.get('image_path')
+        if image_path:
+            image_full_path = Path(__file__).parent.parent / image_path
+            if not image_full_path.exists():
+                raise ValueError(f"Image not found: {image_path} in {post_path}")
+            # Ensure image path starts with /
+            image_path = f'/{image_path}' if not image_path.startswith('/') else image_path
+        
+        # Fix image paths in the markdown content to be relative to the root
+        body = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', 
+                     lambda m: f'![{m.group(1)}](/{m.group(2).lstrip("/")})', 
+                     body)
+        
+        # Convert markdown to HTML with extensions
+        html_content = markdown.markdown(body, extensions=['fenced_code', 'tables', 'codehilite'])
+        reading_time = estimate_reading_time(body)
+        
+        # Generate tags HTML with icons
+        tags = frontmatter.get('tags', [])
+        if not isinstance(tags, list):
+            raise ValueError(f"Tags must be a list in {post_path}")
+        tags_html = ''.join(generate_tag_html(tag) for tag in tags) if tags else ''
+        
+        # Generate the blog post HTML using the template
+        blog_content_template = load_template('blog_content')
+        post_html = blog_content_template.format(
+            title=post_name,
+            date=post_date,
+            reading_time=reading_time,
+            content=html_content,
+            tags_html=tags_html
+        )
+        
+        # Ensure blog directory exists
+        html_path = post_path.with_suffix('.html')
+        html_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Save the HTML version in the blog directory
+        with open(html_path, 'w', encoding='utf-8') as file:
+            file.write(post_html)
+        
+        return {
+            'title': post_name,
+            'date': post_date,
+            'description': frontmatter.get('description') or body.split('\n\n')[1][:200] + '...',
+            'html_path': f'/blog/{post_path.stem}.html',  # Add leading slash for absolute path
+            'image_path': image_path,
+            'reading_time': reading_time
+        }
+    except Exception as e:
+        print(f"Error processing blog post {post_path}: {str(e)}")
+        return None
 
 def generate_blog_post_html(post):
     """Generate HTML for a single blog post preview"""
@@ -166,11 +186,19 @@ def generate_blog_section_html(config):
     
     # Get all markdown files in the blog directory
     blog_dir = Path(__file__).parent.parent / 'blog'
+    blog_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Create images/blog directory if it doesn't exist
+    blog_images_dir = Path(__file__).parent.parent / 'images' / 'blog'
+    blog_images_dir.mkdir(parents=True, exist_ok=True)
+    
     blog_posts = []
     
     if blog_dir.exists():
         for post_file in blog_dir.glob('*.md'):
-            blog_posts.append(load_blog_post(post_file))
+            post_data = load_blog_post(post_file)
+            if post_data:  # Only add successfully processed posts
+                blog_posts.append(post_data)
     
     # Sort posts by date (newest first)
     blog_posts.sort(key=lambda x: datetime.strptime(x['date'], '%B %d, %Y'), reverse=True)

@@ -18,8 +18,15 @@ services:
       - ../app/style.css:/usr/share/nginx/html/style.css:ro
       - ../app/script.js:/usr/share/nginx/html/script.js:ro
       - ../app/templates:/usr/share/nginx/html/templates:ro
+      - nginx_cache:/var/cache/nginx
+      - nginx_logs:/var/log/nginx
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
       interval: 30s
       timeout: 10s
-      retries: 3 
+      retries: 3
+    user: nginx
+
+volumes:
+  nginx_cache:
+  nginx_logs: 
